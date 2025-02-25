@@ -1,2 +1,1 @@
-# BalatroJava
-balatro no java louco
+# Coffee Clicker
