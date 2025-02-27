@@ -4,6 +4,8 @@ import br.edu.insper.coffeeclicker.game.achievement.Achievement;
 import br.edu.insper.coffeeclicker.game.building.Building;
 import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class Ascension
@@ -11,10 +13,21 @@ public class Ascension
     private double coffees = 0;
     private int milk = 0;
     private double clickSize = 1;
-    private double coffeePerSec = 0;
+    private double coffeePerSec = 0.1;
     private final ArrayList<Building> buildings = new ArrayList<>();
     private final ArrayList<Upgrade> upgrades = new ArrayList<>();
     private final ArrayList<Achievement> achievements = new ArrayList<>();
+
+    public void click(int clickAmount)
+    {
+        coffees += clickSize * clickAmount;
+    }
+    public void doCoffeePerSec(LocalDateTime lastRequest)
+    {
+        LocalDateTime currentRequest = LocalDateTime.now();
+        double milliseconds = ChronoUnit.MILLIS.between(lastRequest, currentRequest);
+        coffees += coffeePerSec * (milliseconds / 1000);
+    }
 
     public double getCoffees()
     {
