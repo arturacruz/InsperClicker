@@ -32,4 +32,13 @@ public class Player
         if(soulUpgrade == null) return;
         this.soulUpgrades.add(soulUpgrade);
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
 }

@@ -54,4 +54,8 @@ public class Game
     {
         this.lastRequest = LocalDateTime.now();
     }
+
+    public Player getPlayer() {
+        return player;
+    }
 }

@@ -7,7 +7,7 @@ import java.util.HashMap;
 @Service
 public class GameState
 {
-    private HashMap<String, Game> gameStates = new HashMap<>();
+    private final HashMap<String, Game> gameStates = new HashMap<>();
 
     public Game getGameInstance(String player)
     {

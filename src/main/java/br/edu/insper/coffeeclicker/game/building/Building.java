@@ -24,16 +24,6 @@ public class Building
         updatePrice();
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
     public String getDisplayName() {
         return displayName;
     }
@@ -64,7 +54,6 @@ public class Building
         this.level = level;
     }
 
-
     public int getUnlockLevel()
     {
         return this.unlockLevel;
@@ -94,5 +83,9 @@ public class Building
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public double getBaseCoffeePerSec() {
+        return baseCoffeePerSec;
     }
 }

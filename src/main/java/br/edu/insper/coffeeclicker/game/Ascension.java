@@ -6,8 +6,8 @@ import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Ascension
@@ -16,6 +16,7 @@ public class Ascension
     private int milk = 0;
     private double clickSize = 1;
     private double coffeePerSec = 0;
+    private int currentUnlockLevel = 1;
     private final HashMap<String, Building> buildings = Init.generateStarterBuildings();
     private final HashMap<String, Upgrade> upgrades = Init.generateStarterUpgrades();
     private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
@@ -60,6 +61,16 @@ public class Ascension
         return clickSize;
     }
 
+    public void setCurrentUnlockLevel(int unlockLevel)
+    {
+        this.currentUnlockLevel = unlockLevel;
+    }
+
+    public int getCurrentUnlockLevel()
+    {
+        return this.currentUnlockLevel;
+    }
+
     public void setClickSize(double clickSize)
     {
         this.clickSize = clickSize;
@@ -86,7 +97,7 @@ public class Ascension
 
     public Building getBuilding(String buildingName)
     {
-        if(!this.buildings.containsKey(buildingName))
+        if(!buildingExists(buildingName))
         {
             System.err.println("Building with name {" + buildingName + "} not found");
             return null;
@@ -94,18 +105,24 @@ public class Ascension
         return this.buildings.get(buildingName);
     }
 
-    public void buyBuilding(String buildingName, int amount)
+    public boolean buildingExists(String name)
     {
-        if(!this.buildings.containsKey(buildingName))
+        return this.buildings.containsKey(name);
+    }
+
+    public void buyBuilding(String name, int amount)
+    {
+        if(!buildingExists(name))
         {
-            System.err.println("Building with name {" + buildingName + "} not found");
+            System.err.println("Building with name {" + name + "} not found");
             return;
         }
 
-        Building building = getBuilding(buildingName);
+        Building building = getBuilding(name);
         double totalPrice = building.getPrice() * amount;
-        if(getCoffees() < totalPrice) return;
+        if(coffees < totalPrice) return;
 
+        if(building.getUnlockLevel() == currentUnlockLevel) setCurrentUnlockLevel(building.getUnlockLevel() + 1);
         building.buy(amount);
         subtractFromCoffees(totalPrice);
         updateCoffeePerSec();
@@ -149,5 +166,21 @@ public class Ascension
             return;
         }
         // getAchievement(achievementName).addToLevel(amount);
+    }
+
+    public Map<String, Building> getBuildings() {
+        return buildings
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getUnlockLevel() <= currentUnlockLevel)
+                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+    }
+
+    public HashMap<String, Upgrade> getUpgrades() {
+        return upgrades;
+    }
+
+    public HashMap<String, Achievement> getAchievements() {
+        return achievements;
     }
 }
