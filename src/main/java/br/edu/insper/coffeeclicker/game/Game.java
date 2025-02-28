@@ -1,19 +1,24 @@
 package br.edu.insper.coffeeclicker.game;
 
+import br.edu.insper.coffeeclicker.game.building.Building;
+
 import java.time.LocalDateTime;
 
 public class Game
 {
 
     private LocalDateTime lastRequest;
-    private Ascension ascension;
+    private final Ascension ascension;
+    private Player player;
 
-    public Game()
+    public Game(String playerName)
     {
         // TODO: Call init functions
         System.out.println("Initializing game.");
         lastRequest = LocalDateTime.now();
         this.ascension = new Ascension();
+
+        this.player = new Player(playerName);
 
         // TODO: Main game logic
         System.out.println("Starting game.");
@@ -22,7 +27,7 @@ public class Game
     public void doPassiveActions()
     {
         this.ascension.doCoffeePerSec(lastRequest);
-        this.lastRequest = LocalDateTime.now();
+        updateLastRequest();
     }
 
     public void click(int clickAmount)
@@ -30,9 +35,9 @@ public class Game
         this.ascension.click(clickAmount);
     }
 
-    public void buyBuilding(String buildingName)
+    public void buyBuilding(String buildingName, int amount)
     {
-
+        ascension.buyBuilding(buildingName, amount);
     }
 
     public Ascension getCurrentAscension()
@@ -45,7 +50,7 @@ public class Game
         return lastRequest;
     }
 
-    public void updateLastRequest()
+    private void updateLastRequest()
     {
         this.lastRequest = LocalDateTime.now();
     }

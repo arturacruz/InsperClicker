@@ -7,16 +7,18 @@ import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 public class Ascension
 {
     private double coffees = 0;
     private int milk = 0;
     private double clickSize = 1;
-    private double coffeePerSec = 0.1;
-    private final ArrayList<Building> buildings = new ArrayList<>();
-    private final ArrayList<Upgrade> upgrades = new ArrayList<>();
-    private final ArrayList<Achievement> achievements = new ArrayList<>();
+    private double coffeePerSec = 0;
+    private final HashMap<String, Building> buildings = Init.generateStarterBuildings();
+    private final HashMap<String, Upgrade> upgrades = Init.generateStarterUpgrades();
+    private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
 
     public void click(int clickAmount)
     {
@@ -33,6 +35,10 @@ public class Ascension
     {
         return coffees;
     }
+
+    public void addToCoffees(double amount) { this.coffees += amount; }
+
+    public void subtractFromCoffees(double amount) { this.coffees -= amount; }
 
     public void setCoffees(double coffees)
     {
@@ -69,36 +75,79 @@ public class Ascension
         this.coffeePerSec = coffeePerSec;
     }
 
-    public ArrayList<Building> getBuildings()
+    public void updateCoffeePerSec()
     {
-        return buildings;
+        this.coffeePerSec = this.buildings
+                .values()
+                .stream()
+                .filter(building -> building.getLevel() >= 1)
+                .mapToDouble(Building::getCoffeePerSec).sum();
     }
 
-    public ArrayList<Upgrade> getUpgrades()
+    public Building getBuilding(String buildingName)
     {
-        return upgrades;
+        if(!this.buildings.containsKey(buildingName))
+        {
+            System.err.println("Building with name {" + buildingName + "} not found");
+            return null;
+        }
+        return this.buildings.get(buildingName);
     }
 
-    public ArrayList<Achievement> getAchievements()
+    public void buyBuilding(String buildingName, int amount)
     {
-        return achievements;
+        if(!this.buildings.containsKey(buildingName))
+        {
+            System.err.println("Building with name {" + buildingName + "} not found");
+            return;
+        }
+
+        Building building = getBuilding(buildingName);
+        double totalPrice = building.getPrice() * amount;
+        if(getCoffees() < totalPrice) return;
+
+        building.buy(amount);
+        subtractFromCoffees(totalPrice);
+        updateCoffeePerSec();
     }
 
-    public void addBuilding(Building building)
+    public Upgrade getUpgrade(String upgradeName)
     {
-        if(building == null) return;
-        this.buildings.add(building);
+        if(!this.upgrades.containsKey(upgradeName))
+        {
+            System.err.println("Upgrade with name {" + upgradeName + "} not found");
+            return null;
+        }
+        return this.upgrades.get(upgradeName);
     }
 
-    public void addUpgrade(Upgrade upgrade)
+    public void buyUpgrade(String upgradeName, int amount)
     {
-        if(upgrade == null) return;
-        this.upgrades.add(upgrade);
+        if(!this.upgrades.containsKey(upgradeName))
+        {
+            System.err.println("Upgrade with name {" + upgradeName + "} not found");
+            return;
+        }
+        // getUpgrade(upgradeName).addToLevel(amount);
     }
 
-    public void addAchievement(Achievement achievement)
+    public Achievement getAchievement(String achievementName)
     {
-        if(achievement == null) return;
-        this.achievements.add(achievement);
+        if(!this.achievements.containsKey(achievementName))
+        {
+            System.err.println("Achievement with name {" + achievementName + "} not found");
+            return null;
+        }
+        return this.achievements.get(achievementName);
+    }
+
+    public void buyAchievement(String achievementName, int amount)
+    {
+        if(!this.achievements.containsKey(achievementName))
+        {
+            System.err.println("Achievement with name {" + achievementName + "} not found");
+            return;
+        }
+        // getAchievement(achievementName).addToLevel(amount);
     }
 }

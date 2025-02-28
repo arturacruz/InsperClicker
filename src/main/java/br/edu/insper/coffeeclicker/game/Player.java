@@ -6,8 +6,14 @@ import java.util.ArrayList;
 
 public class Player
 {
+    private String name;
     private int ascensionLevel = 0;
     private final ArrayList<SoulUpgrade> soulUpgrades = new ArrayList<>();
+
+    public Player(String name)
+    {
+        this.name = name;
+    }
 
     public int getAscensionLevel() {
         return ascensionLevel;
