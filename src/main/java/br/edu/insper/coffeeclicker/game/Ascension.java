@@ -116,7 +116,7 @@ public class Ascension
     public float getBuildingDiscountBonus() {
         return buildingDiscountBonus;
     }
-    
+
     /**
      * {@link Ascension#getBuildingDiscountBonus()}
      */
