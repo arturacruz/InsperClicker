@@ -1,7 +1,9 @@
 package br.edu.insper.coffeeclicker.game;
 
+import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.building.Building;
 
+import javax.naming.NameNotFoundException;
 import java.time.LocalDateTime;
 
 public class Game
@@ -26,6 +28,7 @@ public class Game
 
     public void doPassiveActions()
     {
+
         this.ascension.doCoffeePerSec(lastRequest);
         updateLastRequest();
     }
@@ -35,7 +38,7 @@ public class Game
         this.ascension.click(clickAmount);
     }
 
-    public void buyBuilding(String buildingName, int amount)
+    public void buyBuilding(String buildingName, int amount) throws GameResourceNotFoundException
     {
         ascension.buyBuilding(buildingName, amount);
     }

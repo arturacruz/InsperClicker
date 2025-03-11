@@ -1,9 +1,14 @@
 package br.edu.insper.coffeeclicker.game;
 
+import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.achievement.Achievement;
 import br.edu.insper.coffeeclicker.game.building.Building;
 import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ResponseStatusException;
 
+import javax.naming.NameNotFoundException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
@@ -17,6 +22,8 @@ public class Ascension
     private double clickSize = 1;
     private double coffeePerSec = 0;
     private int currentUnlockLevel = 1;
+    private float buildingDiscountBonus = 0;
+    private float buildingProductionBonus = 0;
     private final HashMap<String, Building> buildings = Init.generateStarterBuildings();
     private final HashMap<String, Upgrade> upgrades = Init.generateStarterUpgrades();
     private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
@@ -86,6 +93,23 @@ public class Ascension
         this.coffeePerSec = coffeePerSec;
     }
 
+    public float getBuildingProductionBonus()
+    {
+        return buildingProductionBonus;
+    }
+
+    public void setBuildingProductionBonus(float buildingProductionBonus) {
+        this.buildingProductionBonus = buildingProductionBonus;
+    }
+
+    public float getBuildingDiscountBonus() {
+        return buildingDiscountBonus;
+    }
+
+    public void setBuildingDiscountBonus(float buildingDiscountBonus) {
+        this.buildingDiscountBonus = buildingDiscountBonus;
+    }
+
     public void updateCoffeePerSec()
     {
         this.coffeePerSec = this.buildings
@@ -110,12 +134,11 @@ public class Ascension
         return this.buildings.containsKey(name);
     }
 
-    public void buyBuilding(String name, int amount)
+    public void buyBuilding(String name, int amount) throws GameResourceNotFoundException
     {
         if(!buildingExists(name))
         {
-            System.err.println("Building with name {" + name + "} not found");
-            return;
+            throw new GameResourceNotFoundException(name, "Building");
         }
 
         Building building = getBuilding(name);
@@ -168,13 +191,29 @@ public class Ascension
         // getAchievement(achievementName).addToLevel(amount);
     }
 
-    public Map<String, Building> getBuildings() {
+    public Map<String, Building> getBuildings()
+    {
         return buildings
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().getUnlockLevel() <= currentUnlockLevel)
                 .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
     }
+
+    public void updateRunSoulValues(Player player)
+    {
+        buildingDiscountBonus = player.getBuildingDiscountBonus();
+        buildingProductionBonus = player.getBuildingProductionBonus();
+        updateBuildingBonuses();
+    }
+
+    public void updateBuildingBonuses()
+    {
+        this.buildings
+                .values()
+                .forEach(building -> building.updateBonusValues(this));
+    }
+
 
     public HashMap<String, Upgrade> getUpgrades() {
         return upgrades;

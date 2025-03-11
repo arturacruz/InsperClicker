@@ -8,7 +8,11 @@ public class Player
 {
     private String name;
     private int ascensionLevel = 0;
+    private int soulBeans = 0;
     private final ArrayList<SoulUpgrade> soulUpgrades = new ArrayList<>();
+    private float buildingProductionBonus = 0;
+    private float buildingDiscountBonus = 0;
+
 
     public Player(String name)
     {
@@ -41,4 +45,27 @@ public class Player
         this.name = name;
     }
 
+    public float getBuildingProductionBonus() {
+        return buildingProductionBonus;
+    }
+
+    public void setBuildingProductionBonus(float buildingProductionBonus) {
+        this.buildingProductionBonus = buildingProductionBonus;
+    }
+
+    public float getBuildingDiscountBonus() {
+        return buildingDiscountBonus;
+    }
+
+    public void setBuildingDiscountBonus(float buildingDiscountBonus) {
+        this.buildingDiscountBonus = buildingDiscountBonus;
+    }
+
+    public int getSoulBeans() {
+        return soulBeans;
+    }
+
+    public void setSoulBeans(int soulBeans) {
+        this.soulBeans = soulBeans;
+    }
 }

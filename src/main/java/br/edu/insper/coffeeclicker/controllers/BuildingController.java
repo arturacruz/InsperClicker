@@ -1,4 +1,5 @@
 package br.edu.insper.coffeeclicker.controllers;
+import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.Ascension;
 import br.edu.insper.coffeeclicker.game.Game;
 import br.edu.insper.coffeeclicker.game.GameState;
@@ -7,6 +8,7 @@ import br.edu.insper.coffeeclicker.game.building.Building;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.NameNotFoundException;
 import java.util.HashMap;
 
 @RestController
@@ -25,7 +27,6 @@ public class BuildingController
         Game game = gameState.getGameInstance(playerName);
         game.buyBuilding(buildingName, amount);
         return game;
-
     }
 
     @GetMapping("/list")
