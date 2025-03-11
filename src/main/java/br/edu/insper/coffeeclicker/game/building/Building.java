@@ -35,7 +35,7 @@ public class Building extends GameResource
             this.price = baseCost;
             return;
         }
-        this.price = baseCost + Math.pow(1.15, getLevel());
+        this.price = (baseCost + Math.pow(1.15, getLevel())) * getEffectiveDiscountBonus();
     }
 
     public int getLevel() {
@@ -62,7 +62,7 @@ public class Building extends GameResource
 
     public double getCoffeePerSec()
     {
-        return this.coffeePerSec;
+        return this.coffeePerSec * getEffectiveProductionBonus();
     }
 
     public void updateCoffeePerSec()
@@ -74,22 +74,52 @@ public class Building extends GameResource
         return baseCoffeePerSec;
     }
 
+    /**
+     * Number in percentage, from 0 to 1
+     * 0.05 would apply a 5% bonus, subtracting from 1
+     */
     public double getProductionBonus() {
         return productionBonus;
     }
 
+    /**
+     * {@link Building#getProductionBonus()}
+     */
     public void setProductionBonus(double productionBonus) {
         this.productionBonus = productionBonus;
     }
 
-    public double getDiscountBonus() {
+    /**
+     * Number in percentage, from 0 to 1
+     * 0.05 would apply a 5% bonus, subtracting from 1
+     */
+    public double getDiscountBonus()
+    {
         return discountBonus;
     }
 
+    /**
+     * {@link Building#getDiscountBonus()}
+     */
     public void setDiscountBonus(double discountBonus) {
         this.discountBonus = discountBonus;
     }
 
+    /**
+     * Number in percentage, with the value subtracted from 1
+     */
+    public double getEffectiveDiscountBonus()
+    {
+        return 1 - this.discountBonus;
+    }
+
+    /**
+     * Number in percentage, with the value subtracted from 1
+     */
+    public double getEffectiveProductionBonus()
+    {
+        return 1 - this.productionBonus;
+    }
 
     public void updateBonusValues(Ascension ascension)
     {

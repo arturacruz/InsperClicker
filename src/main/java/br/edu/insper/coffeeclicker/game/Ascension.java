@@ -93,19 +93,33 @@ public class Ascension
         this.coffeePerSec = coffeePerSec;
     }
 
+    /**
+     * Number in percentage, from 0 to 1
+     * 0.05 would apply a 5% bonus, subtracting from 1
+     */
     public float getBuildingProductionBonus()
     {
         return buildingProductionBonus;
     }
 
+    /**
+     * {@link Ascension#getBuildingProductionBonus()}
+     */
     public void setBuildingProductionBonus(float buildingProductionBonus) {
         this.buildingProductionBonus = buildingProductionBonus;
     }
 
+    /**
+     * Number in percentage, from 0 to 1
+     * 0.05 would apply a 5% bonus, subtracting from 1
+     */
     public float getBuildingDiscountBonus() {
         return buildingDiscountBonus;
     }
-
+    
+    /**
+     * {@link Ascension#getBuildingDiscountBonus()}
+     */
     public void setBuildingDiscountBonus(float buildingDiscountBonus) {
         this.buildingDiscountBonus = buildingDiscountBonus;
     }

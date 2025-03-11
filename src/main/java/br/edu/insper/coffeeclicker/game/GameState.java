@@ -7,6 +7,10 @@ import java.util.HashMap;
 @Service
 public class GameState
 {
+    /**
+     * String = playerName
+     * Game = Corresponding game instance
+     */
     private final HashMap<String, Game> gameStates = new HashMap<>();
 
     public Game getGameInstance(String player)
