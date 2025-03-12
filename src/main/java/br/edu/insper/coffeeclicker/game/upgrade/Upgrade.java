@@ -1,5 +1,6 @@
 package br.edu.insper.coffeeclicker.game.upgrade;
 
+import br.edu.insper.coffeeclicker.dto.RequirementTargetDTO;
 import br.edu.insper.coffeeclicker.game.building.Building;
 import br.edu.insper.coffeeclicker.game.target.RequirementTarget;
 import br.edu.insper.coffeeclicker.game.resource.GameResource;
@@ -34,13 +35,13 @@ public class Upgrade extends GameResource
      *
      * @return the NAMES of the buildings
      */
-    public List<String> getTargetList()
+    public List<RequirementTargetDTO> getTargetList()
     {
-        ArrayList<String> names = new ArrayList<>();
+        ArrayList<RequirementTargetDTO> targets = new ArrayList<>();
         targetList.forEach(
-                target -> names.add(target.getResourceName())
+                target -> targets.add(RequirementTargetDTO.from(target))
         );
-        return names;
+        return targets;
     }
 
     public boolean isTaken()
