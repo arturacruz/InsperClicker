@@ -11,7 +11,7 @@ public class UpgradeRegistry
 
     public static final Upgrade TEST_UPGRADE = new Upgrade(
             "testUpgrade", "Test Upgrade", "A test upgrade.", 10,
-            createTarget(COFFEE_MUG, 1, 0.5)
+            createTarget(COFFEE_MUG, 2, 0.5)
     );
 
     public static HashMap<String, Upgrade> generateStarterUpgrades()

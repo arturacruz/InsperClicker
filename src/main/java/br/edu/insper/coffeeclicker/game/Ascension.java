@@ -253,22 +253,27 @@ public class Ascension
 
     public void unlockUpgrades(Building building)
     {
+        // Get all upgrades that have this building as a requirement
         List<Map.Entry<String, Upgrade>> newUpgrades = upgrades.entrySet().stream()
                 .filter(entry -> entry.getValue().anyResourceIs(building))
                 .toList();
 
+        // Filter through those upgrades to see if all buildings are at the desired levels
         newUpgrades.stream()
                 .filter(entry -> {
                     Upgrade upgrade = entry.getValue();
                     for(RequirementTarget<Building> target : upgrade.getTargetList())
                     {
+                        // Get building from our game instance
                         Building bd = getBuilding(target.getResourceName());
                         if (bd == null) return false;
 
+                        // if it's not at the required level, or is null, remove it from our filter
                         if(!target.hasRequiredLevel(bd.getLevel())) return false;
                     }
                     return true;
                 })
+                // unlock
                 .forEach(entry -> entry.getValue().unlock());
     }
 
