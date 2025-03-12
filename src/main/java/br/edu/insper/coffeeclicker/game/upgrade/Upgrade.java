@@ -45,9 +45,10 @@ public class Upgrade extends GameResource
         this.taken = taken;
     }
 
-    public double getTotalProductionBonus()
+    public double getBuildingProductionBonus(Building building)
     {
         return this.targetList.stream()
+                .filter(target -> target.isOf(building))
                 .mapToDouble(Target::getBonus)
                 .sum();
     }
@@ -91,6 +92,23 @@ public class Upgrade extends GameResource
     public double getPrice()
     {
         return price;
+    }
+
+    public boolean isValidForUnlock()
+    {
+        for(RequirementTarget<Building> rt : targetList)
+        {
+            if(rt.getRequiredLevel() != rt.getGameResource().getLevel()) return false;
+        }
+        return true;
+    }
+
+    public void applyBonuses()
+    {
+        targetList.forEach(
+                target -> target.getGameResource()
+                        .addToUpgradeProductionBonus(target.getBonus())
+        );
     }
 
 }

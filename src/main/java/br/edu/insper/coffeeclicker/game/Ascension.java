@@ -126,7 +126,8 @@ public class Ascension
     /**
      * {@link Ascension#getBuildingDiscountBonus()}
      */
-    public void setBuildingDiscountBonus(float buildingDiscountBonus) {
+    public void setBuildingDiscountBonus(float buildingDiscountBonus)
+    {
         this.buildingDiscountBonus = buildingDiscountBonus;
     }
 
@@ -167,12 +168,13 @@ public class Ascension
         }
 
         Building building = getBuilding(name);
-        double totalPrice = building.getPrice() * amount;
+        double totalPrice = building.getBuyPrice(amount);
         if(coffees < totalPrice) return;
+        if(building.getUnlockLevel() > currentUnlockLevel) return;
 
         if(building.getUnlockLevel() == currentUnlockLevel) incrementUnlockLevel(building.getUnlockLevel());
         building.buy(amount);
-        unlockUpgrades(building);
+        unlockUpgrades();
         subtractFromCoffees(totalPrice);
         updateCoffeePerSec();
 
@@ -188,15 +190,38 @@ public class Ascension
         return this.upgrades.get(upgradeName);
     }
 
-    public void buyUpgrade(String upgradeName, int amount)
+    public void buyUpgrade(String name) throws GameResourceNotFoundException
     {
-        if(!this.upgrades.containsKey(upgradeName))
+        if(!upgradeExists(name))
         {
-            System.err.println("Upgrade with name {" + upgradeName + "} not found");
-            return;
+            throw new GameResourceNotFoundException(name, "Upgrade");
         }
-        // getUpgrade(upgradeName).addToLevel(amount);
+
+        Upgrade upgrade = getUpgrade(name);
+        double price = upgrade.getPrice();
+        if(coffees < price) return;
+        if(!upgrade.isUnlocked()) return;
+        upgrade.setTaken(true);
+        subtractFromCoffees(price);
+        updateBuildingUpgradeBonus();
+        updateBuildingBonuses();
+        updateCoffeePerSec();
     }
+
+    public boolean upgradeExists(String name)
+    {
+        return this.upgrades.containsKey(name);
+    }
+
+    public void updateBuildingUpgradeBonus() throws GameResourceNotFoundException
+    {
+        buildings.values()
+                .forEach(building -> building.setUpgradeProductionBonus(0));
+
+        upgrades.values()
+                .forEach(Upgrade::applyBonuses);
+    }
+
 
     public Achievement getAchievement(String achievementName)
     {
@@ -251,30 +276,11 @@ public class Ascension
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
-    public void unlockUpgrades(Building building)
+    public void unlockUpgrades()
     {
-        // Get all upgrades that have this building as a requirement
-        List<Map.Entry<String, Upgrade>> newUpgrades = upgrades.entrySet().stream()
-                .filter(entry -> entry.getValue().anyResourceIs(building))
-                .toList();
-
-        // Filter through those upgrades to see if all buildings are at the desired levels
-        newUpgrades.stream()
-                .filter(entry -> {
-                    Upgrade upgrade = entry.getValue();
-                    for(RequirementTarget<Building> target : upgrade.getTargetList())
-                    {
-                        // Get building from our game instance
-                        Building bd = getBuilding(target.getResourceName());
-                        if (bd == null) return false;
-
-                        // if it's not at the required level, or is null, remove it from our filter
-                        if(!target.hasRequiredLevel(bd.getLevel())) return false;
-                    }
-                    return true;
-                })
-                // unlock
-                .forEach(entry -> entry.getValue().unlock());
+        upgrades.values().stream()
+                .filter(Upgrade::isValidForUnlock)
+                .forEach(Upgrade::unlock);
     }
 
     public HashMap<String, Achievement> getAchievements() {
