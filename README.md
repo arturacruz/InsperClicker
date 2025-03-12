@@ -1,4 +1,4 @@
-# Coffee Clicker
+# Insper Clicker
 
 ```mermaid
 classDiagram
