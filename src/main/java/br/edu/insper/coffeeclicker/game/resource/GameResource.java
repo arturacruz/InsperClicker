@@ -13,11 +13,11 @@ public class GameResource
         this.description = description;
     }
 
-
     public String getDisplayName()
     {
         return displayName;
     }
+
     public void setDisplayName(String displayName)
     {
         this.displayName = displayName;
@@ -36,10 +36,9 @@ public class GameResource
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
-
-
 
 }

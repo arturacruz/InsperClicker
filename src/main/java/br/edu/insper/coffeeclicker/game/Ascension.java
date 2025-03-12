@@ -3,7 +3,10 @@ package br.edu.insper.coffeeclicker.game;
 import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.achievement.Achievement;
 import br.edu.insper.coffeeclicker.game.building.Building;
+import br.edu.insper.coffeeclicker.game.building.BuildingRegistry;
+import br.edu.insper.coffeeclicker.game.resource.GameResource;
 import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
+import br.edu.insper.coffeeclicker.game.upgrade.UpgradeRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,8 +27,8 @@ public class Ascension
     private int currentUnlockLevel = 1;
     private float buildingDiscountBonus = 0;
     private float buildingProductionBonus = 0;
-    private final HashMap<String, Building> buildings = Init.generateStarterBuildings();
-    private final HashMap<String, Upgrade> upgrades = Init.generateStarterUpgrades();
+    private final HashMap<String, Building> buildings = BuildingRegistry.generateStarterBuildings();
+    private final HashMap<String, Upgrade> upgrades = UpgradeRegistry.generateStarterUpgrades();
     private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
 
     public void click(int clickAmount)
@@ -211,7 +214,7 @@ public class Ascension
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getValue().getUnlockLevel() <= currentUnlockLevel)
-                .collect(Collectors.toMap(map -> map.getKey(), map -> map.getValue()));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public void updateRunSoulValues(Player player)
@@ -229,8 +232,13 @@ public class Ascension
     }
 
 
-    public HashMap<String, Upgrade> getUpgrades() {
-        return upgrades;
+    public Map<String, Upgrade> getUpgrades()
+    {
+        return upgrades
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().isUnlocked())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public HashMap<String, Achievement> getAchievements() {
