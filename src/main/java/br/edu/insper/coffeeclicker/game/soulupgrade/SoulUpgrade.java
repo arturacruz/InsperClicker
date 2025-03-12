@@ -6,9 +6,9 @@ public class SoulUpgrade extends GameResource
 {
     private double price;
 
-    public SoulUpgrade(String displayName, String name, String description, double price)
+    public SoulUpgrade(String name, String displayName, String description, double price)
     {
-        super(displayName, name, description);
+        super(name, displayName, description);
         this.price = price;
     }
 

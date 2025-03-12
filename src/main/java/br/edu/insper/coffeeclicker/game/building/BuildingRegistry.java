@@ -39,7 +39,7 @@ public class BuildingRegistry
 
     private static void addToMap(Building building)
     {
-        buildings.put(building.getDisplayName(), building);
+        buildings.put(building.getName(), building);
     }
 
 }

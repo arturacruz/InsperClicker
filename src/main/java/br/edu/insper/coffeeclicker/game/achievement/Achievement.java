@@ -6,9 +6,9 @@ public class Achievement extends GameResource
 {
     private boolean unlocked = false;
 
-    public Achievement(String displayName, String name, String description)
+    public Achievement(String name, String displayName, String description)
     {
-        super(displayName, name, description);
+        super(name, displayName, description);
     }
 
     public boolean isUnlocked()

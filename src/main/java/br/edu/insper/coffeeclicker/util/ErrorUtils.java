@@ -5,8 +5,6 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import br.edu.insper.coffeeclicker.exception.ErrorDTO;
 import org.springframework.http.ResponseEntity;
 
-
-
 public class ErrorUtils
 {
     public static ResponseEntity<ErrorDTO> throwNotFound(RuntimeException err)

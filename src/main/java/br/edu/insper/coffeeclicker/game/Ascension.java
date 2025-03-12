@@ -4,14 +4,9 @@ import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.achievement.Achievement;
 import br.edu.insper.coffeeclicker.game.building.Building;
 import br.edu.insper.coffeeclicker.game.building.BuildingRegistry;
-import br.edu.insper.coffeeclicker.game.resource.GameResource;
 import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
 import br.edu.insper.coffeeclicker.game.upgrade.UpgradeRegistry;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ResponseStatusException;
 
-import javax.naming.NameNotFoundException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;

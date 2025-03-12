@@ -21,7 +21,7 @@ public class UpgradeRegistry
         return upgrades;
     }
 
-    private static Upgrade register(String displayName, String name, String description, double price,
+    private static Upgrade register(String name, String displayName, String description, double price,
                                     Building primaryBuilding, int primaryRequiredLevel, double primaryBonus,
                                     @Nullable Building secondaryBuilding, int secondaryRequiredLevel, double secondaryBonus)
     {
@@ -33,12 +33,12 @@ public class UpgradeRegistry
         }
 
         return new Upgrade(
-            displayName, name, description, price, primaryTarget, secondaryTarget
+                name, displayName, description, price, primaryTarget, secondaryTarget
         );
     }
 
     private static void addToMap(Upgrade upgrade)
     {
-        upgrades.put(upgrade.getDisplayName(), upgrade);
+        upgrades.put(upgrade.getName(), upgrade);
     }
 }

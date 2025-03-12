@@ -6,7 +6,7 @@ public class GameResource
     private String name;
     private String description;
 
-    public GameResource(String displayName, String name, String description)
+    public GameResource(String name, String displayName, String description)
     {
         this.displayName = displayName;
         this.name = name;

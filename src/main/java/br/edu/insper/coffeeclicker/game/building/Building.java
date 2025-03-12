@@ -16,7 +16,7 @@ public class Building extends GameResource
 
     public Building(String name, String displayName, double baseCost, String description, double baseCoffeePerSec, int unlockLevel)
     {
-        super(displayName, name, description);
+        super(name, displayName, description);
         this.baseCost = baseCost;
         this.baseCoffeePerSec = baseCoffeePerSec;
         this.unlockLevel = unlockLevel;

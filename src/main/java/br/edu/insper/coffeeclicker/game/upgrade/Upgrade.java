@@ -18,11 +18,11 @@ public class Upgrade extends GameResource
     private boolean unlocked = false;
     private final double price;
 
-    public Upgrade(String displayName, String name, String description, double price,
+    public Upgrade(String name, String displayName, String description, double price,
                    RequirementTarget<Building> primaryResource,
                    @Nullable RequirementTarget<Building> secondaryResource)
     {
-        super(displayName, name, description);
+        super(name, displayName, description);
         this.price = price;
         this.primaryResource = primaryResource;
         this.secondaryResource = secondaryResource;
