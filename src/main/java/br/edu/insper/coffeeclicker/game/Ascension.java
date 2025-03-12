@@ -4,12 +4,15 @@ import br.edu.insper.coffeeclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.coffeeclicker.game.achievement.Achievement;
 import br.edu.insper.coffeeclicker.game.building.Building;
 import br.edu.insper.coffeeclicker.game.building.BuildingRegistry;
+import br.edu.insper.coffeeclicker.game.target.RequirementTarget;
 import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
 import br.edu.insper.coffeeclicker.game.upgrade.UpgradeRegistry;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -69,6 +72,11 @@ public class Ascension
     public void setCurrentUnlockLevel(int unlockLevel)
     {
         this.currentUnlockLevel = unlockLevel;
+    }
+
+    public void incrementUnlockLevel(int currentUnlockLevel)
+    {
+        this.currentUnlockLevel++;
     }
 
     public int getCurrentUnlockLevel()
@@ -131,6 +139,11 @@ public class Ascension
                 .mapToDouble(Building::getCoffeePerSec).sum();
     }
 
+    /**
+     * This method fetches a building.
+     *
+     * @return the building if available, or null if not found.
+     */
     public Building getBuilding(String buildingName)
     {
         if(!buildingExists(buildingName))
@@ -157,10 +170,12 @@ public class Ascension
         double totalPrice = building.getPrice() * amount;
         if(coffees < totalPrice) return;
 
-        if(building.getUnlockLevel() == currentUnlockLevel) setCurrentUnlockLevel(building.getUnlockLevel() + 1);
+        if(building.getUnlockLevel() == currentUnlockLevel) incrementUnlockLevel(building.getUnlockLevel());
         building.buy(amount);
+        unlockUpgrades(building);
         subtractFromCoffees(totalPrice);
         updateCoffeePerSec();
+
     }
 
     public Upgrade getUpgrade(String upgradeName)
@@ -234,6 +249,27 @@ public class Ascension
                 .stream()
                 .filter(entry -> entry.getValue().isUnlocked())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public void unlockUpgrades(Building building)
+    {
+        List<Map.Entry<String, Upgrade>> newUpgrades = upgrades.entrySet().stream()
+                .filter(entry -> entry.getValue().anyResourceIs(building))
+                .toList();
+
+        newUpgrades.stream()
+                .filter(entry -> {
+                    Upgrade upgrade = entry.getValue();
+                    for(RequirementTarget<Building> target : upgrade.getTargetList())
+                    {
+                        Building bd = getBuilding(target.getResourceName());
+                        if (bd == null) return false;
+
+                        if(!target.hasRequiredLevel(bd.getLevel())) return false;
+                    }
+                    return true;
+                })
+                .forEach(entry -> entry.getValue().unlock());
     }
 
     public HashMap<String, Achievement> getAchievements() {

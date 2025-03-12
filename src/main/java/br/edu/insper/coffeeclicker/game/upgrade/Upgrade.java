@@ -7,42 +7,32 @@ import br.edu.insper.coffeeclicker.game.target.Target;
 import jakarta.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Upgrade extends GameResource
 {
-    private final RequirementTarget<Building> primaryResource;
-    private final RequirementTarget<Building> secondaryResource;
-    private final List<Target<Building>> targetList = new ArrayList<>();
+    private final List<RequirementTarget<Building>> targetList = new ArrayList<>();
     private boolean taken = false;
     private boolean unlocked = false;
     private final double price;
 
+    @SafeVarargs
+    /**
+     * @param targetResources -> UNSAFE. Can cause heap pollution. DO NOT ADD A CLASS THAT INHERITS BUILDING, ONLY ITSELF.
+     */
     public Upgrade(String name, String displayName, String description, double price,
-                   RequirementTarget<Building> primaryResource,
-                   @Nullable RequirementTarget<Building> secondaryResource)
+                   RequirementTarget<Building>... targetResources)
     {
         super(name, displayName, description);
         this.price = price;
-        this.primaryResource = primaryResource;
-        this.secondaryResource = secondaryResource;
-        createTargetList();
+
+        this.targetList.addAll(Arrays.asList(targetResources));
     }
 
-    private void createTargetList()
+    public List<RequirementTarget<Building>> getTargetList()
     {
-        this.targetList.add(primaryResource);
-        if(secondaryResource != null) this.targetList.add(secondaryResource);
-    }
-
-    public RequirementTarget<Building> getPrimaryResource()
-    {
-        return primaryResource;
-    }
-
-    public RequirementTarget<Building> getSecondaryResource()
-    {
-        return secondaryResource;
+        return targetList;
     }
 
     public boolean isTaken()
@@ -67,13 +57,40 @@ public class Upgrade extends GameResource
         return unlocked;
     }
 
+    public boolean anyResourceIs(Building building)
+    {
+        for(RequirementTarget<Building> rt : targetList)
+        {
+            if(rt.isOf(building)) return true;
+        }
+        return false;
+    }
+
+    public boolean allResourcesAre(Building... buildings)
+    {
+        for(Building bd : buildings)
+        {
+            for(RequirementTarget<Building> rt : targetList)
+            {
+                if(!rt.isOf(bd)) return false;
+            }
+        }
+        return true;
+    }
+
     public void setUnlocked(boolean unlocked)
     {
         this.unlocked = unlocked;
+    }
+
+    public void unlock()
+    {
+        this.unlocked = true;
     }
 
     public double getPrice()
     {
         return price;
     }
+
 }
