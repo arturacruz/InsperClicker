@@ -36,6 +36,8 @@ public class Building extends GameResource
 
     public double getBuyPrice(int amount)
     {
+        if(level == 0 && amount == 1) return baseCost;
+
         return (baseCost * amount + Math.pow(1.15, getLevel() + amount - 1)) * getEffectiveDiscountBonus();
     }
     public void updatePrice()

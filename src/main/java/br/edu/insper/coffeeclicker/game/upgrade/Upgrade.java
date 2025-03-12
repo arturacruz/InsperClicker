@@ -30,9 +30,17 @@ public class Upgrade extends GameResource
         this.targetList.addAll(Arrays.asList(targetResources));
     }
 
-    public List<RequirementTarget<Building>> getTargetList()
+    /**
+     *
+     * @return the NAMES of the buildings
+     */
+    public List<String> getTargetList()
     {
-        return targetList;
+        ArrayList<String> names = new ArrayList<>();
+        targetList.forEach(
+                target -> names.add(target.getResourceName())
+        );
+        return names;
     }
 
     public boolean isTaken()
