@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.insper</groupId>
-	<artifactId>coffeeclicker</artifactId>
+	<artifactId>insperclicker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>coffeeclicker</name>
+	<name>insperclicker</name>
 	<description>CookieClicker clone in spring boot</description>
 	<url/>
 	<licenses>
