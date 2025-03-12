@@ -21,6 +21,7 @@ public class UpgradeController
             @RequestParam String playerName,
             @PathVariable String upgradeName) {
         Game game = gameState.getGameInstance(playerName);
+        game.buyUpgrade(upgradeName);
         return game;
     }
 

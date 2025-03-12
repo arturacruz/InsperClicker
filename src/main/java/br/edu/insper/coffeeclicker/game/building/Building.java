@@ -2,6 +2,10 @@ package br.edu.insper.coffeeclicker.game.building;
 
 import br.edu.insper.coffeeclicker.game.Ascension;
 import br.edu.insper.coffeeclicker.game.resource.GameResource;
+import br.edu.insper.coffeeclicker.game.upgrade.Upgrade;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Building extends GameResource
 {
@@ -13,6 +17,7 @@ public class Building extends GameResource
     private int level = 0;
     private double discountBonus = 0;
     private double productionBonus = 0;
+    private double upgradeProductionBonus = 0;
 
     public Building(String name, String displayName, double baseCost, String description, double baseCoffeePerSec, int unlockLevel)
     {
@@ -27,6 +32,11 @@ public class Building extends GameResource
 
     public double getPrice() {
         return price;
+    }
+
+    public double getBuyPrice(int amount)
+    {
+        return (baseCost * amount + Math.pow(1.15, getLevel() + amount - 1)) * getEffectiveDiscountBonus();
     }
     public void updatePrice()
     {
@@ -62,12 +72,12 @@ public class Building extends GameResource
 
     public double getCoffeePerSec()
     {
-        return this.coffeePerSec * getEffectiveProductionBonus();
+        return this.coffeePerSec;
     }
 
     public void updateCoffeePerSec()
     {
-        this.coffeePerSec = baseCoffeePerSec * level;
+        this.coffeePerSec = baseCoffeePerSec * level * getEffectiveProductionBonus();
     }
 
     public double getBaseCoffeePerSec() {
@@ -118,13 +128,28 @@ public class Building extends GameResource
      */
     public double getEffectiveProductionBonus()
     {
-        return 1 - this.productionBonus;
+        return 1 + this.productionBonus;
     }
 
     public void updateBonusValues(Ascension ascension)
     {
-        this.productionBonus = ascension.getBuildingProductionBonus();
+        this.productionBonus = ascension.getBuildingProductionBonus() + getUpgradeProductionBonus();
         this.discountBonus = ascension.getBuildingDiscountBonus();
+        this.updateCoffeePerSec();
     }
 
+    public void addToUpgradeProductionBonus(double value)
+    {
+        this.upgradeProductionBonus += value;
+    }
+
+    public double getUpgradeProductionBonus()
+    {
+        return upgradeProductionBonus;
+    }
+
+    public void setUpgradeProductionBonus(double upgradeProductionBonus)
+    {
+        this.upgradeProductionBonus = upgradeProductionBonus;
+    }
 }

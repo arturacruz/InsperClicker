@@ -43,6 +43,11 @@ public class Game
         ascension.buyBuilding(buildingName, amount);
     }
 
+    public void buyUpgrade(String upgradeName) throws GameResourceNotFoundException
+    {
+        ascension.buyUpgrade(upgradeName);
+    }
+
     public Ascension getCurrentAscension()
     {
         return this.ascension;
