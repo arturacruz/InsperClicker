@@ -1,6 +1,9 @@
 package br.edu.insper.insperclicker.game;
 
+import br.edu.insper.insperclicker.exception.GameResourceAlreadyOwnedException;
 import br.edu.insper.insperclicker.exception.GameResourceNotFoundException;
+import br.edu.insper.insperclicker.exception.GameResourceNotUnlockedException;
+import br.edu.insper.insperclicker.exception.InsufficientFundsException;
 import br.edu.insper.insperclicker.game.achievement.Achievement;
 import br.edu.insper.insperclicker.game.building.Building;
 import br.edu.insper.insperclicker.game.building.BuildingRegistry;
@@ -15,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class Graduation
 {
-    private double moneys = 0;
+    private double money = 0;
     private int crypto = 0;
     private double clickSize = 1;
     private double moneyPerSec = 0;
@@ -28,27 +31,27 @@ public class Graduation
 
     public void click(int clickAmount)
     {
-        moneys += clickSize * clickAmount;
+        money += clickSize * clickAmount;
     }
     public void doMoneyPerSec(LocalDateTime lastRequest)
     {
         LocalDateTime currentRequest = LocalDateTime.now();
         double milliseconds = ChronoUnit.MILLIS.between(lastRequest, currentRequest);
-        moneys += moneyPerSec * (milliseconds / 1000);
+        money += moneyPerSec * (milliseconds / 1000);
     }
 
-    public double getMoneys()
+    public double getMoney()
     {
-        return moneys;
+        return money;
     }
 
-    public void addToMoneys(double amount) { this.moneys += amount; }
+    public void addToMoney(double amount) { this.money += amount; }
 
-    public void subtractFromMoneys(double amount) { this.moneys -= amount; }
+    public void subtractFromMoney(double amount) { this.money -= amount; }
 
-    public void setMoneys(double moneys)
+    public void setMoney(double money)
     {
-        this.moneys = moneys;
+        this.money = money;
     }
 
     public int getCrypto()
@@ -157,7 +160,9 @@ public class Graduation
         return this.buildings.containsKey(name);
     }
 
-    public void buyBuilding(String name, int amount) throws GameResourceNotFoundException
+    public void buyBuilding(String name, int amount) throws GameResourceNotFoundException,
+                                                            InsufficientFundsException,
+                                                            GameResourceNotUnlockedException
     {
         if(!buildingExists(name))
         {
@@ -165,14 +170,22 @@ public class Graduation
         }
 
         Building building = getBuilding(name);
+        if(building.getUnlockLevel() > currentUnlockLevel)
+        {
+            throw new GameResourceNotUnlockedException(name, "Building");
+        }
+
         double totalPrice = building.getBuyPrice(amount);
-        if(moneys < totalPrice) return;
-        if(building.getUnlockLevel() > currentUnlockLevel) return;
+        if(money < totalPrice)
+        {
+            throw new InsufficientFundsException(name, "Building", totalPrice, money);
+        }
+
 
         if(building.getUnlockLevel() == currentUnlockLevel) incrementUnlockLevel(building.getUnlockLevel());
         building.buy(amount);
         unlockUpgrades();
-        subtractFromMoneys(totalPrice);
+        subtractFromMoney(totalPrice);
         updateMoneyPerSec();
 
     }
@@ -187,7 +200,10 @@ public class Graduation
         return this.upgrades.get(upgradeName);
     }
 
-    public void buyUpgrade(String name) throws GameResourceNotFoundException
+    public void buyUpgrade(String name) throws GameResourceNotFoundException,
+                                                GameResourceAlreadyOwnedException,
+                                                GameResourceNotUnlockedException,
+                                                InsufficientFundsException
     {
         if(!upgradeExists(name))
         {
@@ -195,11 +211,23 @@ public class Graduation
         }
 
         Upgrade upgrade = getUpgrade(name);
+        if(!upgrade.isUnlocked())
+        {
+            throw new GameResourceNotUnlockedException(name, "Upgrade");
+        }
+        if(upgrade.isTaken())
+        {
+            throw new GameResourceAlreadyOwnedException(name, "Upgrade");
+        }
+
         double price = upgrade.getPrice();
-        if(moneys < price) return;
-        if(!upgrade.isUnlocked()) return;
+        if(money < price)
+        {
+            throw new InsufficientFundsException(name, "Upgrade", price, money);
+        }
+
         upgrade.setTaken(true);
-        subtractFromMoneys(price);
+        subtractFromMoney(price);
         updateBuildingUpgradeBonus();
         updateBuildingBonuses();
         updateMoneyPerSec();

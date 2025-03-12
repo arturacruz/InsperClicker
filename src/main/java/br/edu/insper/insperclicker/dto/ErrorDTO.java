@@ -1,4 +1,4 @@
-package br.edu.insper.insperclicker.exception;
+package br.edu.insper.insperclicker.dto;
 
 import org.springframework.http.HttpStatus;
 

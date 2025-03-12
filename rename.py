@@ -19,7 +19,7 @@ def walk_dir(path: str) -> None:
 
 def rename_var_in(file: str) -> None:
 
-    f = open(file, "r");
+    f = open(file, "r")
     txt: str = f.read()
     f.close()
 
