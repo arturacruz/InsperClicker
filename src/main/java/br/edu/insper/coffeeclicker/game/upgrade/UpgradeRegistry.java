@@ -9,10 +9,9 @@ public class UpgradeRegistry
 {
     private static final HashMap<String, Upgrade> upgrades = new HashMap<>();
 
-    public static final Upgrade TEST_UPGRADE = register(
+    public static final Upgrade TEST_UPGRADE = new Upgrade(
             "testUpgrade", "Test Upgrade", "A test upgrade.", 10,
-            COFFEE_MUG, 1, 0.05,
-            null, 0, 0
+            createTarget(COFFEE_MUG, 2, 0.5)
     );
 
     public static HashMap<String, Upgrade> generateStarterUpgrades()
@@ -21,20 +20,9 @@ public class UpgradeRegistry
         return upgrades;
     }
 
-    private static Upgrade register(String name, String displayName, String description, double price,
-                                    Building primaryBuilding, int primaryRequiredLevel, double primaryBonus,
-                                    @Nullable Building secondaryBuilding, int secondaryRequiredLevel, double secondaryBonus)
+    private static RequirementTarget<Building> createTarget(Building building, int level, double bonus)
     {
-        RequirementTarget<Building> primaryTarget = new RequirementTarget<>(primaryBuilding, primaryRequiredLevel, primaryBonus);
-        RequirementTarget<Building> secondaryTarget = null;
-        if(secondaryBuilding != null)
-        {
-            secondaryTarget = new RequirementTarget<>(secondaryBuilding, secondaryRequiredLevel, secondaryBonus);
-        }
-
-        return new Upgrade(
-                name, displayName, description, price, primaryTarget, secondaryTarget
-        );
+        return new RequirementTarget<>(building, level, bonus);
     }
 
     private static void addToMap(Upgrade upgrade)
