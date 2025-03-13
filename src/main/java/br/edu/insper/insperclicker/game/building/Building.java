@@ -2,22 +2,22 @@ package br.edu.insper.insperclicker.game.building;
 
 import br.edu.insper.insperclicker.game.Graduation;
 import br.edu.insper.insperclicker.game.resource.GameResource;
+import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
 
-public class Building extends GameResource
+public class Building extends LeveledGameResource
 {
     private double price;
     private final double baseCost;
     private final int unlockLevel;
     private final double baseMoneyPerSec;
     private double moneyPerSec;
-    private int level = 0;
     private double discountBonus = 0;
     private double productionBonus = 0;
     private double upgradeProductionBonus = 0;
 
     public Building(String name, String displayName, double baseCost, String description, double baseMoneyPerSec, int unlockLevel)
     {
-        super(name, displayName, description);
+        super(name, displayName, description, 0);
         this.baseCost = baseCost;
         this.baseMoneyPerSec = baseMoneyPerSec;
         this.unlockLevel = unlockLevel;
@@ -32,27 +32,18 @@ public class Building extends GameResource
 
     public double getBuyPrice(int amount)
     {
-        if(level == 0 && amount == 1) return baseCost;
+        if(getLevel() == 0 && amount == 1) return baseCost;
 
         return (baseCost * amount + Math.pow(1.15, getLevel() + amount - 1)) * getEffectiveDiscountBonus();
     }
     public void updatePrice()
     {
-        if(level == 0)
+        if(getLevel() == 0)
         {
             this.price = baseCost;
             return;
         }
         this.price = (baseCost + Math.pow(1.15, getLevel())) * getEffectiveDiscountBonus();
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    private void setLevel(int level)
-    {
-        this.level = level;
     }
 
     public int getUnlockLevel()
@@ -66,8 +57,6 @@ public class Building extends GameResource
         updateMoneyPerSec();
     }
 
-    private void addToLevel(int amount) { this.level += amount; }
-
     public double getMoneyPerSec()
     {
         return this.moneyPerSec;
@@ -75,7 +64,7 @@ public class Building extends GameResource
 
     public void updateMoneyPerSec()
     {
-        this.moneyPerSec = baseMoneyPerSec * level * getEffectiveProductionBonus();
+        this.moneyPerSec = baseMoneyPerSec * getLevel() * getEffectiveProductionBonus();
     }
 
     public double getBaseMoneyPerSec() {

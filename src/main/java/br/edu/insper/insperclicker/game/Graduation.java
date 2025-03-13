@@ -7,11 +7,14 @@ import br.edu.insper.insperclicker.exception.InsufficientFundsException;
 import br.edu.insper.insperclicker.game.achievement.Achievement;
 import br.edu.insper.insperclicker.game.building.Building;
 import br.edu.insper.insperclicker.game.building.BuildingRegistry;
+import br.edu.insper.insperclicker.game.crypto.Crypto;
+import br.edu.insper.insperclicker.game.crypto.CryptoRegistry;
 import br.edu.insper.insperclicker.game.upgrade.Upgrade;
 import br.edu.insper.insperclicker.game.upgrade.UpgradeRegistry;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,7 +22,6 @@ import java.util.stream.Collectors;
 public class Graduation
 {
     private double money = 0;
-    private int crypto = 0;
     private double clickSize = 1;
     private double moneyPerSec = 0;
     private int currentUnlockLevel = 1;
@@ -28,6 +30,8 @@ public class Graduation
     private final HashMap<String, Building> buildings = BuildingRegistry.generateStarterBuildings();
     private final HashMap<String, Upgrade> upgrades = UpgradeRegistry.generateStarterUpgrades();
     private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
+    private final ArrayList<Crypto> cryptos = CryptoRegistry.generateStarterCryptoLevels();
+    private int cryptoLevel = 0;
 
     public void click(int clickAmount)
     {
@@ -52,16 +56,6 @@ public class Graduation
     public void setMoney(double money)
     {
         this.money = money;
-    }
-
-    public int getCrypto()
-    {
-        return crypto;
-    }
-
-    public void setCrypto(int crypto)
-    {
-        this.crypto = crypto;
     }
 
     public double getClickSize()
