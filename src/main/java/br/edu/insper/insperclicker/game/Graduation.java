@@ -5,16 +5,19 @@ import br.edu.insper.insperclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.insperclicker.exception.GameResourceNotUnlockedException;
 import br.edu.insper.insperclicker.exception.InsufficientFundsException;
 import br.edu.insper.insperclicker.game.achievement.Achievement;
+import br.edu.insper.insperclicker.game.achievement.AchievementRegistry;
+import br.edu.insper.insperclicker.game.achievement.money.MoneyAchievement;
 import br.edu.insper.insperclicker.game.building.Building;
 import br.edu.insper.insperclicker.game.building.BuildingRegistry;
-import br.edu.insper.insperclicker.game.crypto.Crypto;
-import br.edu.insper.insperclicker.game.crypto.CryptoRegistry;
+import br.edu.insper.insperclicker.game.crypto.Stock;
+import br.edu.insper.insperclicker.game.crypto.StockRegistry;
+import br.edu.insper.insperclicker.game.money.Money;
+import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
 import br.edu.insper.insperclicker.game.upgrade.Upgrade;
 import br.edu.insper.insperclicker.game.upgrade.UpgradeRegistry;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 public class Graduation
 {
     private double money = 0;
+    private Money moneyInstance = new Money();
     private double clickSize = 1;
     private double moneyPerSec = 0;
     private int currentUnlockLevel = 1;
@@ -29,9 +33,9 @@ public class Graduation
     private float buildingProductionBonus = 0;
     private final HashMap<String, Building> buildings = BuildingRegistry.generateStarterBuildings();
     private final HashMap<String, Upgrade> upgrades = UpgradeRegistry.generateStarterUpgrades();
-    private final HashMap<String, Achievement> achievements = Init.generateStarterAchievements();
-    private final ArrayList<Crypto> cryptos = CryptoRegistry.generateStarterCryptoLevels();
-    private int cryptoLevel = 0;
+    private final HashMap<String, Achievement<? extends LeveledGameResource>> achievements = AchievementRegistry.generateStarterAchievements();
+
+    private final Stock stock = StockRegistry.create();
 
     public void click(int clickAmount)
     {
@@ -242,7 +246,7 @@ public class Graduation
     }
 
 
-    public Achievement getAchievement(String achievementName)
+    public Achievement<?> getAchievement(String achievementName)
     {
         if(!this.achievements.containsKey(achievementName))
         {
@@ -302,7 +306,32 @@ public class Graduation
                 .forEach(Upgrade::unlock);
     }
 
-    public HashMap<String, Achievement> getAchievements() {
+    public void unlockAchievements()
+    {
+        achievements.values().stream()
+                .filter(Achievement::isValidForUnlock)
+                .forEach(Achievement::unlock);
+    }
+
+    public void updateAchievementStockLevel() throws GameResourceNotFoundException
+    {
+        stock.setLevel(0);
+        int stockLevel = achievements.values().stream()
+                .filter(Achievement::isUnlocked)
+                .mapToInt(Achievement::applyBonusToStock).sum();
+        stock.setLevel(stockLevel);
+    }
+
+    public HashMap<String, Achievement<? extends LeveledGameResource>> getAchievements()
+    {
         return achievements;
+    }
+
+    public void doPassiveActions(LocalDateTime lastRequest)
+    {
+        doMoneyPerSec(lastRequest);
+        moneyInstance.setLevel((int) money);
+        unlockAchievements();
+        updateAchievementStockLevel();
     }
 }
