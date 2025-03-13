@@ -12,7 +12,7 @@ public class Game
 
     private LocalDateTime lastRequest;
     private final Graduation graduation;
-    private Player player;
+    private final Player player;
 
     public Game(String playerName)
     {
@@ -26,7 +26,7 @@ public class Game
 
     public void doPassiveActions()
     {
-        this.graduation.doMoneyPerSec(lastRequest);
+        this.graduation.doPassiveActions(lastRequest);
         updateLastRequest();
     }
 

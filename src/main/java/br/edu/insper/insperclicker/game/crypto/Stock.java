@@ -1,6 +1,5 @@
 package br.edu.insper.insperclicker.game.crypto;
 
-import br.edu.insper.insperclicker.game.resource.GameResource;
 import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
 
 /**
@@ -8,11 +7,11 @@ import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
  * Didn't want to intend it behaves the same way, even it the fields are similar.
  * Works passively.
  */
-public class Crypto extends LeveledGameResource
+public class Stock extends LeveledGameResource
 {
-    public Crypto(String name, String displayName, String description, int level)
+    public Stock()
     {
-        super(name, displayName, description, level);
+        super("ethereum", "Ethereum", "Todo mundo começa pequneno.", 0);
     }
 
 }

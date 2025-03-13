@@ -11,16 +11,17 @@ public class LeveledGameResource extends GameResource
         this.level = level;
     }
 
-    public int getLevel() {
+    public int getLevel()
+    {
         return level;
     }
 
-    protected void setLevel(int level)
+    public void setLevel(int level)
     {
         this.level = level;
     }
 
-    protected void addToLevel(int amount) { this.level += amount; }
+    public void addToLevel(int amount) { this.level += amount; }
 
 
 }

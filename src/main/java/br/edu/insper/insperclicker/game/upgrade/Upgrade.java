@@ -86,11 +86,6 @@ public class Upgrade extends GameResource
         return true;
     }
 
-    public void setUnlocked(boolean unlocked)
-    {
-        this.unlocked = unlocked;
-    }
-
     public void unlock()
     {
         this.unlocked = true;
@@ -105,7 +100,7 @@ public class Upgrade extends GameResource
     {
         for(RequirementTarget<Building> rt : targetList)
         {
-            if(rt.getRequiredLevel() != rt.getGameResource().getLevel()) return false;
+            if(rt.getRequiredLevel() > rt.getGameResource().getLevel()) return false;
         }
         return true;
     }

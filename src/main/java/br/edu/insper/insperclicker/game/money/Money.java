@@ -4,8 +4,8 @@ import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
 
 public class Money extends LeveledGameResource
 {
-    public Money(String name, String displayName, String description, int level)
+    public Money()
     {
-        super(name, displayName, description, level);
+        super("money", "Money", "Your money!", 0);
     }
 }
