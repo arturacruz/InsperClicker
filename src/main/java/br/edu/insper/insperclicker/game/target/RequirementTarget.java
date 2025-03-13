@@ -1,8 +1,8 @@
 package br.edu.insper.insperclicker.game.target;
 
-import br.edu.insper.insperclicker.game.resource.GameResource;
+import br.edu.insper.insperclicker.game.resource.LeveledGameResource;
 
-public class RequirementTarget<T extends GameResource> extends Target<T>
+public class RequirementTarget<T extends LeveledGameResource> extends Target<T>
 {
     private final int requiredLevel;
 
@@ -22,16 +22,9 @@ public class RequirementTarget<T extends GameResource> extends Target<T>
         return this.getGameResource().equals(resource);
     }
 
-    public boolean hasRequiredLevel(int requiredLevel)
-    {
-        return this.requiredLevel == requiredLevel;
-    }
-
     public String getResourceName()
     {
         return getGameResource().getName();
     }
-
-
 
 }

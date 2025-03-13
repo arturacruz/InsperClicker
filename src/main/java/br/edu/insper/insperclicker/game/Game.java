@@ -17,19 +17,15 @@ public class Game
     public Game(String playerName)
     {
         // TODO: Call init functions
-        System.out.println("Initializing game.");
+        System.out.println("Initializing game for " + playerName);
         lastRequest = LocalDateTime.now();
         this.graduation = new Graduation();
 
         this.player = new Player(playerName);
-
-        // TODO: Main game logic
-        System.out.println("Starting game.");
     }
 
     public void doPassiveActions()
     {
-
         this.graduation.doMoneyPerSec(lastRequest);
         updateLastRequest();
     }

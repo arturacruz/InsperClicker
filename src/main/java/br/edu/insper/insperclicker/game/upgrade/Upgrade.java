@@ -31,7 +31,6 @@ public class Upgrade extends GameResource
     }
 
     /**
-     *
      * @return the DTO of the buildings
      */
     public List<RequirementTargetDTO> getTargetList()
