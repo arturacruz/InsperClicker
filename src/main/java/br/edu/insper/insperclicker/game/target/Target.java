@@ -1,16 +1,14 @@
 package br.edu.insper.insperclicker.game.target;
 
-import br.edu.insper.insperclicker.game.resource.GameResource;
+import br.edu.insper.insperclicker.game.resources.common.GameResource;
 
 public class Target<T extends GameResource>
 {
     private final T gameResource;
-    private final double bonus;
 
-    public Target(T resource, double bonus)
+    public Target(T resource)
     {
         this.gameResource = resource;
-        this.bonus = bonus;
     }
 
     public T getGameResource()
@@ -18,8 +16,4 @@ public class Target<T extends GameResource>
         return gameResource;
     }
 
-    public double getBonus()
-    {
-        return bonus;
-    }
 }
