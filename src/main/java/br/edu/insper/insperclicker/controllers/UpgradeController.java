@@ -1,9 +1,9 @@
 package br.edu.insper.insperclicker.controllers;
 
-import br.edu.insper.insperclicker.game.Game;
-import br.edu.insper.insperclicker.game.GameState;
-import br.edu.insper.insperclicker.game.upgrade.Upgrade;
-import br.edu.insper.insperclicker.game.upgrade.UpgradeRegistry;
+import br.edu.insper.insperclicker.game.common.Game;
+import br.edu.insper.insperclicker.game.common.GameState;
+import br.edu.insper.insperclicker.game.resources.upgrade.Upgrade;
+import br.edu.insper.insperclicker.game.resources.upgrade.UpgradeRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

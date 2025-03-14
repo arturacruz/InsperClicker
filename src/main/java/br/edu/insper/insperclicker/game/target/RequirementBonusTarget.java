@@ -2,24 +2,19 @@ package br.edu.insper.insperclicker.game.target;
 
 import br.edu.insper.insperclicker.game.resources.common.LeveledGameResource;
 
-public class RequirementTarget<T extends LeveledGameResource> extends Target<T>
+public class RequirementBonusTarget<T extends LeveledGameResource> extends BonusTarget<T>
 {
     private final int requiredLevel;
 
-    public RequirementTarget(T gameResource, int requiredLevel)
+    public RequirementBonusTarget(T gameResource, int requiredLevel, double bonus)
     {
-        super(gameResource);
+        super(gameResource, bonus);
         this.requiredLevel = requiredLevel;
     }
 
     public int getRequiredLevel()
     {
         return requiredLevel;
-    }
-
-    public boolean isValid()
-    {
-        return requiredLevel == getGameResource().getLevel();
     }
 
     public boolean isOf(T resource)

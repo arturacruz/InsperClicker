@@ -1,5 +1,7 @@
 package br.edu.insper.insperclicker.exception;
 
+import java.math.BigDecimal;
+
 public class InsufficientFundsException extends RuntimeException
 {
     private final String message;
