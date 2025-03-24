@@ -6,7 +6,7 @@ import br.edu.insper.insperclicker.game.currency.stock.Stock;
 
 public class CurrencyRegistry
 {
-    public static Money MONEY = new Money(0);
+    public static Money MONEY = new Money(100000000.0);
 
     public static MoneyPerSec MONEY_PER_SEC = new MoneyPerSec(0);
 

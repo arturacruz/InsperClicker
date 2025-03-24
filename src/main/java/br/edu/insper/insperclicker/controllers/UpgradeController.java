@@ -22,6 +22,7 @@ public class UpgradeController
             @PathVariable String upgradeName) {
         Game game = gameState.getGameInstance(playerName);
         game.buyUpgrade(upgradeName);
+        game.doPassiveActions();
         return game;
     }
 

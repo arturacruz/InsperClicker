@@ -20,7 +20,6 @@ public class GameState
             gameStates.put(player, new Game(player));
         }
         Game game = gameStates.get(player);
-        game.doPassiveActions();
         return game;
     }
 

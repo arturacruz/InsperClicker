@@ -6,33 +6,33 @@ import java.time.LocalDateTime;
 
 public class ErrorDTO
 {
-    private final String exceptionName;
+    private final String exception;
     private final String message;
     private final HttpStatus statusCode;
-    private final LocalDateTime localDateTime;
+    private final LocalDateTime timestamp;
 
     public ErrorDTO(RuntimeException ex, HttpStatus statusCode)
     {
-        this.exceptionName = ex.getClass().getSimpleName();
+        this.exception = ex.getClass().getSimpleName();
         this.message = ex.getMessage();
         this.statusCode = statusCode;
-        this.localDateTime = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now();
     }
 
     public String getMessage() {
         return message;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
     }
 
     public HttpStatus getStatusCode() {
         return statusCode;
     }
 
-    public String getExceptionName()
+    public String getException()
     {
-        return exceptionName;
+        return exception;
     }
 }

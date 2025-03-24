@@ -1,6 +1,6 @@
 package br.edu.insper.insperclicker.game.resources.upgrade;
 
-import br.edu.insper.insperclicker.dto.RequirementTargetDTO;
+import br.edu.insper.insperclicker.dto.RequirementBonusTargetDTO;
 import br.edu.insper.insperclicker.game.resources.building.Building;
 import br.edu.insper.insperclicker.game.target.BonusTarget;
 import br.edu.insper.insperclicker.game.target.RequirementBonusTarget;
@@ -33,11 +33,11 @@ public class Upgrade extends GameResource
     /**
      * @return the DTO of the buildings
      */
-    public List<RequirementTargetDTO> getTargetList()
+    public List<RequirementBonusTargetDTO> getTargetList()
     {
-        ArrayList<RequirementTargetDTO> targets = new ArrayList<>();
+        ArrayList<RequirementBonusTargetDTO> targets = new ArrayList<>();
         targetList.forEach(
-                target -> targets.add(RequirementTargetDTO.from(target))
+                target -> targets.add(RequirementBonusTargetDTO.from(target))
         );
         return targets;
     }

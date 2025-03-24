@@ -38,11 +38,13 @@ public class Graduation
     {
         money.addToMoney(clickSize * clickAmount);
     }
+
     public void doMoneyPerSec(LocalDateTime lastRequest)
     {
         LocalDateTime currentRequest = LocalDateTime.now();
         double milliseconds = ChronoUnit.MILLIS.between(lastRequest, currentRequest);
         money.addToMoney(getMoneyPerSec() * (milliseconds / 1000));
+        System.out.println("do money");
     }
 
     public double getMoney()
@@ -311,6 +313,16 @@ public class Graduation
                 .filter(Achievement::isUnlocked)
                 .mapToInt(Achievement::applyBonusToStock).sum();
         stock.setAmount(stockLevel);
+    }
+
+    public void updateClickSize()
+    {
+        setClickSize(1);
+        double size = buildings.values().stream()
+                .filter(bd -> bd.getLevel() > 0 && bd.getEffectiveClickSizeIncrease() > 0)
+                .mapToDouble(Building::getEffectiveClickSizeIncrease).sum();
+        setClickSize(getClickSize() + size);
+
     }
 
     public HashMap<String, Achievement> getAchievements()

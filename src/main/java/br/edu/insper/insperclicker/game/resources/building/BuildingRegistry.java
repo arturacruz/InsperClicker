@@ -11,6 +11,7 @@ public class BuildingRegistry
             15,
             "A trusty mug for manual brewing.",
             0.1,
+            0,
             0);
 
     public static final Building COFFEE_GRINDER = new Building(
@@ -19,6 +20,7 @@ public class BuildingRegistry
             100,
             "For the money afficionados that wanna do it themselves.",
             1,
+            0,
             1);
 
     public static final Building COFFEE_MAKER = new Building(
@@ -27,6 +29,7 @@ public class BuildingRegistry
             1000,
             "Automates basic brewing. Now with a carafe!",
             10,
+            0,
             2);
 
     public static HashMap<String, Building> generateStarterBuildings()
