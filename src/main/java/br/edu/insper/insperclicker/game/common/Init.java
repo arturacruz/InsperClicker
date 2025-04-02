@@ -1,40 +1,45 @@
 package br.edu.insper.insperclicker.game.common;
 
+import br.edu.insper.insperclicker.game.currency.common.CurrencyRegistry;
+import br.edu.insper.insperclicker.game.currency.money.Money;
+import br.edu.insper.insperclicker.game.currency.money.MoneyPerSec;
+import br.edu.insper.insperclicker.game.currency.stock.Stock;
 import br.edu.insper.insperclicker.game.resources.achievement.common.Achievement;
 
 import java.util.HashMap;
 
 public class Init
 {
-    public static void initializeBuildings()
+    public void initializeBuildings()
     {
         System.out.println("Initializing buildings.");
     }
 
-    public static HashMap<String, Achievement> generateStarterAchievements()
+    public HashMap<String, Achievement> generateStarterAchievements()
     {
         return new HashMap<>();
     }
 
-    public static void initializeUpgrades()
+    public void initializeUpgrades()
     {
         System.out.println("Initializing upgrades.");
     }
 
-    public static void initializeSoulUpgrades()
+    public void initializeSoulUpgrades()
     {
         System.out.println("Initializing soul upgrades.");
     }
 
-    public static void initializePlayer()
+    public void initializePlayer()
     {
         System.out.println("Initializing player.");
     }
 
-    public static void initializeAchievements()
+    public void initializeAchievements()
     {
         System.out.println("Initializing achievements.");
     }
+
 
 
 }

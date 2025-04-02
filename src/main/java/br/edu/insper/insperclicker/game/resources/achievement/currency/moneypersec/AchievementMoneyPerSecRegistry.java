@@ -6,14 +6,14 @@ import java.util.HashMap;
 
 public class AchievementMoneyPerSecRegistry
 {
-    private static final HashMap<String, AchievementMoneyPerSec> achievements = new HashMap<>();
+    private final HashMap<String, AchievementMoneyPerSec> achievements = new HashMap<>();
 
-    public static HashMap<String, AchievementMoneyPerSec> generateStarterMoneyPerSecAchievements()
+    public HashMap<String, AchievementMoneyPerSec> generateStarterMoneyPerSecAchievements()
     {
 
         return achievements;
     }
-    private static void addToMap(AchievementMoneyPerSec achievementMoneyPerSec)
+    private void addToMap(AchievementMoneyPerSec achievementMoneyPerSec)
     {
         achievements.put(achievementMoneyPerSec.getName(), achievementMoneyPerSec);
     }

@@ -2,6 +2,7 @@ package br.edu.insper.insperclicker.controllers;
 
 import br.edu.insper.insperclicker.game.common.Game;
 import br.edu.insper.insperclicker.game.common.GameState;
+import br.edu.insper.insperclicker.game.common.Registries;
 import br.edu.insper.insperclicker.game.resources.upgrade.Upgrade;
 import br.edu.insper.insperclicker.game.resources.upgrade.UpgradeRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,6 @@ public class UpgradeController
     @GetMapping("/list")
     public HashMap<String, Upgrade> listUpgrades()
     {
-        return UpgradeRegistry.generateStarterUpgrades();
+        return new Registries().initializeUpgrades();
     }
 }

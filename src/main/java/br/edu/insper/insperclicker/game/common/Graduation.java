@@ -23,16 +23,17 @@ import java.util.stream.Collectors;
 
 public class Graduation
 {
-    private final Money money = CurrencyRegistry.MONEY;
-    private final MoneyPerSec moneyPerSec = CurrencyRegistry.MONEY_PER_SEC;
-    private final Stock stock = CurrencyRegistry.STOCK;
+    private final Registries registries = new Registries();
+    private final Money money = registries.initializeMoney();
+    private final MoneyPerSec moneyPerSec = registries.initializeMoneyPerSec();
+    private final Stock stock = registries.initializeStock();
     private double clickSize = 1;
     private int currentUnlockLevel = 1;
     private float buildingDiscountBonus = 0;
     private float buildingProductionBonus = 0;
-    private final HashMap<String, Building> buildings = BuildingRegistry.generateStarterBuildings();
-    private final HashMap<String, Upgrade> upgrades = UpgradeRegistry.generateStarterUpgrades();
-    private final HashMap<String, Achievement> achievements = AchievementRegistry.generateStarterAchievements();
+    private final HashMap<String, Building> buildings = registries.initializeBuildings();
+    private final HashMap<String, Upgrade> upgrades = registries.initializeUpgrades();
+    private final HashMap<String, Achievement> achievements = registries.initializeAchievements();
 
     public void click(int clickAmount)
     {

@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class BuildingRegistry
 {
-    private static final HashMap<String, Building> buildings = new HashMap<>();
-    public static final Building COFFEE_MUG = new Building(
+    private final HashMap<String, Building> buildings = new HashMap<>();
+    public final Building COFFEE_MUG = new Building(
             "moneyMug",
             "Money Mug",
             15,
@@ -14,7 +14,7 @@ public class BuildingRegistry
             0,
             0);
 
-    public static final Building COFFEE_GRINDER = new Building(
+    public final Building COFFEE_GRINDER = new Building(
             "moneyGrinder",
             "Money Grinder",
             100,
@@ -23,7 +23,7 @@ public class BuildingRegistry
             0,
             1);
 
-    public static final Building COFFEE_MAKER = new Building(
+    public final Building COFFEE_MAKER = new Building(
             "moneyMaker",
             "Money Maker",
             1000,
@@ -32,7 +32,7 @@ public class BuildingRegistry
             0,
             2);
 
-    public static HashMap<String, Building> generateStarterBuildings()
+    public HashMap<String, Building> generateStarterBuildings()
     {
         addToMap(COFFEE_MUG);
         addToMap(COFFEE_GRINDER);
@@ -40,7 +40,7 @@ public class BuildingRegistry
         return buildings;
     }
 
-    private static void addToMap(Building building)
+    private void addToMap(Building building)
     {
         buildings.put(building.getName(), building);
     }

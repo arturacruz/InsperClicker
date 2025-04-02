@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 public class AchievementStockRegistry
 {
-    private static final HashMap<String, AchievementStock> achievements = new HashMap<>();
+    private final HashMap<String, AchievementStock> achievements = new HashMap<>();
 
-    public static HashMap<String, AchievementStock> generateStarterStockAchievements()
+    public HashMap<String, AchievementStock> generateStarterStockAchievements()
     {
 
         return achievements;
     }
-    private static void addToMap(AchievementStock achievementStock)
+    private void addToMap(AchievementStock achievementStock)
     {
         achievements.put(achievementStock.getName(), achievementStock);
     }

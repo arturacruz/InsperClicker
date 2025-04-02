@@ -1,6 +1,7 @@
 package br.edu.insper.insperclicker.controllers;
 import br.edu.insper.insperclicker.game.common.Game;
 import br.edu.insper.insperclicker.game.common.GameState;
+import br.edu.insper.insperclicker.game.common.Registries;
 import br.edu.insper.insperclicker.game.resources.building.Building;
 import br.edu.insper.insperclicker.game.resources.building.BuildingRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,6 @@ public class BuildingController
     @GetMapping("/list")
     public HashMap<String, Building> listBuildings()
     {
-        return BuildingRegistry.generateStarterBuildings();
+        return new Registries().initializeBuildings();
     }
 }

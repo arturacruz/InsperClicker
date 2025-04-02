@@ -1,13 +1,12 @@
 from os import listdir
 from os.path import isfile, join, isdir
+from sys import argv
+from ast import literal_eval
 
-replace: dict[str, str] = {
-        "coffee": "money",
-        "milk": "crypto",
-        "ascension": "graduation",
-        "bean": "bitcoin"
-
-    }
+print(argv)
+path_args: str = argv[1]
+args: str = argv[2]
+replace: dict[str, str] = literal_eval(args)
 
 def walk_dir(path: str) -> None:
     onlyfiles: list[str] = [f for f in listdir(path) if isfile(join(path, f)) and f[0] != "." and f != "rename.py"]
@@ -45,5 +44,5 @@ def format(input: str, output: str) -> dict[str, str]:
     return dic
 
 #print(format("coffee", "money"))
-walk_dir("./")
+walk_dir(path_args)
 

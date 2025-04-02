@@ -6,13 +6,14 @@ import br.edu.insper.insperclicker.game.resources.achievement.common.Achievement
 
 public class AchievementMoneyPerSec extends Achievement
 {
-    private final MoneyPerSec moneyPerSec = CurrencyRegistry.MONEY_PER_SEC;
+    private final MoneyPerSec moneyPerSec;
     private final double requirement;
 
-    public AchievementMoneyPerSec(String name, String displayName, String description, double requirement)
+    public AchievementMoneyPerSec(String name, String displayName, String description, double requirement, MoneyPerSec moneyPerSec)
     {
         super(name, displayName, description, "MoneyPerSec");
         this.requirement = requirement;
+        this.moneyPerSec = moneyPerSec;
     }
 
     public double getRequirement()
