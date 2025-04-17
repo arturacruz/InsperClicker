@@ -12,16 +12,12 @@ public class Game
 
     private LocalDateTime lastRequest;
     private final Graduation graduation;
-    private final Player player;
 
-    public Game(String playerName)
+    public Game()
     {
         // TODO: Call init functions
-        System.out.println("Initializing game for " + playerName);
         lastRequest = LocalDateTime.now();
         this.graduation = new Graduation();
-
-        this.player = new Player(playerName);
     }
 
     public void doPassiveActions()
@@ -51,22 +47,13 @@ public class Game
         graduation.buyUpgrade(upgradeName);
     }
 
-    public Graduation getCurrentGraduation()
+    public Graduation getGraduation()
     {
         return this.graduation;
-    }
-
-    public LocalDateTime getLastRequest()
-    {
-        return lastRequest;
     }
 
     private void updateLastRequest()
     {
         this.lastRequest = LocalDateTime.now();
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

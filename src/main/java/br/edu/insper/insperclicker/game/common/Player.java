@@ -1,71 +1,86 @@
 package br.edu.insper.insperclicker.game.common;
 
-import br.edu.insper.insperclicker.game.resources.soulupgrade.SoulUpgrade;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.ArrayList;
-
+@Document(collection = "players")
 public class Player
 {
+    @Id
+    private String id;
+
+    @Indexed(unique = true)
     private String name;
-    private int graduationLevel = 0;
-    private int soulBitcoins = 0;
-    private final ArrayList<SoulUpgrade> soulUpgrades = new ArrayList<>();
-    private float buildingProductionBonus = 0;
-    private float buildingDiscountBonus = 0;
+
+    private double bitcoins = 0;
+    private double buildingProductionBonus = 0;
+    private double buildingDiscountBonus = 0;
+
+    private Game game;
 
 
     public Player(String name)
     {
+        this.game = new Game();
         this.name = name;
     }
 
-    public int getGraduationLevel() {
-        return graduationLevel;
-    }
-
-    public void setGraduationLevel(int graduationLevel) {
-        this.graduationLevel = graduationLevel;
-    }
-
-    public ArrayList<SoulUpgrade> getSoulUpgrades() {
-        return soulUpgrades;
-    }
-
-    public void addSoulUpgrade(SoulUpgrade soulUpgrade)
+    public String getName()
     {
-        if(soulUpgrade == null) return;
-        this.soulUpgrades.add(soulUpgrade);
-    }
-
-    public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public float getBuildingProductionBonus() {
+    public String getId()
+    {
+        return id;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public double getBitcoins()
+    {
+        return bitcoins;
+    }
+
+    public void setBitcoins(double bitcoins) {
+        this.bitcoins = bitcoins;
+    }
+
+    public double getBuildingProductionBonus()
+    {
         return buildingProductionBonus;
     }
 
-    public void setBuildingProductionBonus(float buildingProductionBonus) {
+    public void setBuildingProductionBonus(double buildingProductionBonus)
+    {
         this.buildingProductionBonus = buildingProductionBonus;
     }
 
-    public float getBuildingDiscountBonus() {
+    public double getBuildingDiscountBonus()
+    {
         return buildingDiscountBonus;
     }
 
-    public void setBuildingDiscountBonus(float buildingDiscountBonus) {
+    public void setBuildingDiscountBonus(double buildingDiscountBonus)
+    {
         this.buildingDiscountBonus = buildingDiscountBonus;
     }
 
-    public int getSoulBitcoins() {
-        return soulBitcoins;
+    public Game getGame()
+    {
+        return game;
     }
 
-    public void setSoulBitcoins(int soulBitcoins) {
-        this.soulBitcoins = soulBitcoins;
+    public void setGame(Game game) {
+        this.game = game;
     }
 }

@@ -1,9 +1,10 @@
 package br.edu.insper.insperclicker.controllers;
+import br.edu.insper.insperclicker.dto.PlayerDTO;
 import br.edu.insper.insperclicker.game.common.Game;
-import br.edu.insper.insperclicker.game.common.GameState;
+import br.edu.insper.insperclicker.game.common.PlayerState;
+import br.edu.insper.insperclicker.game.common.Player;
 import br.edu.insper.insperclicker.game.common.Registries;
 import br.edu.insper.insperclicker.game.resources.building.Building;
-import br.edu.insper.insperclicker.game.resources.building.BuildingRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,18 +15,19 @@ import java.util.HashMap;
 public class BuildingController
 {
     @Autowired
-    private GameState gameState;
+    private PlayerState playerState;
 
     @GetMapping("/buy/{buildingName}/{amount}")
-    public Game buyBuilding(
+    public PlayerDTO buyBuilding(
             @RequestParam String playerName,
             @PathVariable String buildingName,
             @PathVariable int amount)
     {
-        Game game = gameState.getGameInstance(playerName);
+        Player player = playerState.getPlayerInstance(playerName);
+        Game game = player.getGame();
         game.buyBuilding(buildingName, amount);
         game.doPassiveActions();
-        return game;
+        return PlayerDTO.from(playerState.saveState(player));
 
     }
 

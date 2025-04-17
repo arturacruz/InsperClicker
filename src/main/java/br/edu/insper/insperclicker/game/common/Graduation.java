@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 public class Graduation
 {
     private final Registries registries = new Registries();
@@ -29,8 +30,8 @@ public class Graduation
     private final Stock stock = registries.initializeStock();
     private double clickSize = 1;
     private int currentUnlockLevel = 1;
-    private float buildingDiscountBonus = 0;
-    private float buildingProductionBonus = 0;
+    private double buildingDiscountBonus = 0;
+    private double buildingProductionBonus = 0;
     private final HashMap<String, Building> buildings = registries.initializeBuildings();
     private final HashMap<String, Upgrade> upgrades = registries.initializeUpgrades();
     private final HashMap<String, Achievement> achievements = registries.initializeAchievements();
@@ -94,7 +95,7 @@ public class Graduation
      * Number in percentage, from 0 to 1
      * 0.05 would apply a 5% bonus, subtracting from 1
      */
-    public float getBuildingProductionBonus()
+    public double getBuildingProductionBonus()
     {
         return buildingProductionBonus;
     }
@@ -110,7 +111,7 @@ public class Graduation
      * Number in percentage, from 0 to 1
      * 0.05 would apply a 5% bonus, subtracting from 1
      */
-    public float getBuildingDiscountBonus() {
+    public double getBuildingDiscountBonus() {
         return buildingDiscountBonus;
     }
 

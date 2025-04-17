@@ -1,10 +1,11 @@
 package br.edu.insper.insperclicker.controllers;
 
+import br.edu.insper.insperclicker.dto.PlayerDTO;
 import br.edu.insper.insperclicker.game.common.Game;
-import br.edu.insper.insperclicker.game.common.GameState;
+import br.edu.insper.insperclicker.game.common.Player;
+import br.edu.insper.insperclicker.game.common.PlayerState;
 import br.edu.insper.insperclicker.game.common.Registries;
 import br.edu.insper.insperclicker.game.resources.upgrade.Upgrade;
-import br.edu.insper.insperclicker.game.resources.upgrade.UpgradeRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,16 +16,19 @@ import java.util.HashMap;
 public class UpgradeController
 {
     @Autowired
-    private GameState gameState;
+    private PlayerState playerState;
 
     @GetMapping("/buy/{upgradeName}")
-    public Game buyUpgrade(
+    public PlayerDTO buyUpgrade(
             @RequestParam String playerName,
-            @PathVariable String upgradeName) {
-        Game game = gameState.getGameInstance(playerName);
+            @PathVariable String upgradeName)
+    {
+        Player player = playerState.getPlayerInstance(playerName);
+        Game game = player.getGame();
         game.buyUpgrade(upgradeName);
         game.doPassiveActions();
-        return game;
+        System.out.println(game.getGraduation().getMoney());
+        return PlayerDTO.from(playerState.saveState(player));
     }
 
     @GetMapping("/list")
