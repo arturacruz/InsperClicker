@@ -1,6 +1,7 @@
 package br.edu.insper.insperclicker.game.common;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,17 +14,29 @@ public class Player
     @Indexed(unique = true)
     private String name;
 
-    private double bitcoins = 0;
-    private double buildingProductionBonus = 0;
-    private double buildingDiscountBonus = 0;
+    private double bitcoins;
+    private double buildingProductionBonus;
+    private double buildingDiscountBonus;
 
-    private Game game;
+    private final Game game;
 
+    public Player(String id, String name, double bitcoins, double buildingProductionBonus, double buildingDiscountBonus, Game game)
+    {
+        this.id = id;
+        this.name = name;
+        this.bitcoins = bitcoins;
+        this.buildingProductionBonus = buildingProductionBonus;
+        this.buildingDiscountBonus = buildingDiscountBonus;
+        this.game = game;
+    }
 
     public Player(String name)
     {
-        this.game = new Game();
         this.name = name;
+        this.game = new Game();
+        this.bitcoins = 0;
+        this.buildingDiscountBonus = 0;
+        this.buildingProductionBonus = 0;
     }
 
     public String getName()
@@ -80,7 +93,4 @@ public class Player
         return game;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
-    }
 }

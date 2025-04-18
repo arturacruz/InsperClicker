@@ -2,21 +2,21 @@ package br.edu.insper.insperclicker.game.currency.stock;
 
 import br.edu.insper.insperclicker.game.currency.common.Currency;
 
-public class Stock extends Currency<Integer>
+public class Stock extends Currency
 {
-    private int level;
+    private double level;
 
-    public Stock(int amount)
+    public Stock(double amount)
     {
         super(amount);
     }
 
-    public void addToStock(int amount)
+    public void addToStock(double amount)
     {
         setAmount(getAmount() + amount);
     }
 
-    public boolean isEqualOrGreaterThan(int amount)
+    public boolean isEqualOrGreaterThan(double amount)
     {
         return getAmount() >= amount;
     }

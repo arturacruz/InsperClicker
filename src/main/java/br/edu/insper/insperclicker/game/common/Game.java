@@ -4,6 +4,8 @@ import br.edu.insper.insperclicker.exception.GameResourceAlreadyOwnedException;
 import br.edu.insper.insperclicker.exception.GameResourceNotFoundException;
 import br.edu.insper.insperclicker.exception.GameResourceNotUnlockedException;
 import br.edu.insper.insperclicker.exception.InsufficientFundsException;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 
 import java.time.LocalDateTime;
 
@@ -13,9 +15,14 @@ public class Game
     private LocalDateTime lastRequest;
     private final Graduation graduation;
 
+    public Game(LocalDateTime lastRequest, Graduation graduation)
+    {
+        this.lastRequest = lastRequest;
+        this.graduation = graduation;
+    }
+
     public Game()
     {
-        // TODO: Call init functions
         lastRequest = LocalDateTime.now();
         this.graduation = new Graduation();
     }
@@ -50,6 +57,11 @@ public class Game
     public Graduation getGraduation()
     {
         return this.graduation;
+    }
+
+    public LocalDateTime getLastRequest()
+    {
+        return lastRequest;
     }
 
     private void updateLastRequest()

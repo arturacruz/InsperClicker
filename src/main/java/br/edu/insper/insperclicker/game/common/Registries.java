@@ -10,10 +10,8 @@ import br.edu.insper.insperclicker.game.resources.building.Building;
 import br.edu.insper.insperclicker.game.resources.building.BuildingRegistry;
 import br.edu.insper.insperclicker.game.resources.upgrade.Upgrade;
 import br.edu.insper.insperclicker.game.resources.upgrade.UpgradeRegistry;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
-
 
 public class Registries
 {

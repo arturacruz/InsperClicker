@@ -12,10 +12,28 @@ import java.util.List;
 
 public class Upgrade extends GameResource
 {
-    private final List<RequirementBonusTarget<Building>> targetList = new ArrayList<>();
-    private boolean taken = false;
-    private boolean unlocked = false;
+    private final List<RequirementBonusTarget<Building>> targetList;
+    private boolean taken;
+    private boolean unlocked;
     private final double price;
+
+
+
+    public Upgrade(
+            String name,
+            String displayName,
+            String description,
+            List<RequirementBonusTarget<Building>> targetList,
+            double price,
+            boolean taken,
+            boolean unlocked)
+    {
+        super(name, displayName, description);
+        this.targetList = targetList;
+        this.price = price;
+        this.taken = taken;
+        this.unlocked = unlocked;
+    }
 
     @SafeVarargs
     /**
@@ -27,13 +45,22 @@ public class Upgrade extends GameResource
         super(name, displayName, description);
         this.price = price;
 
+        this.targetList = new ArrayList<>();
         this.targetList.addAll(Arrays.asList(targetResources));
+        taken = false;
+        unlocked = false;
+    }
+
+    public List<RequirementBonusTarget<Building>> getTargetList()
+    {
+        return targetList;
     }
 
     /**
      * @return the DTO of the buildings
      */
-    public List<RequirementBonusTargetDTO> getTargetList()
+
+    public List<RequirementBonusTargetDTO> getTargetListAsDTO()
     {
         ArrayList<RequirementBonusTargetDTO> targets = new ArrayList<>();
         targetList.forEach(

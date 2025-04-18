@@ -1,20 +1,20 @@
 package br.edu.insper.insperclicker.game.currency.common;
 
-public class Currency<T extends Number>
+public class Currency
 {
-    private T amount;
+    private double amount;
 
-    public Currency(T amount)
+    public Currency(double amount)
     {
         this.amount = amount;
     }
 
-    public T getAmount()
+    public double getAmount()
     {
         return amount;
     }
 
-    public void setAmount(T amount)
+    public void setAmount(double amount)
     {
         this.amount = amount;
     }

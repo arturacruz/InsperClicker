@@ -1,6 +1,7 @@
 package br.edu.insper.insperclicker.game.common;
 
 import br.edu.insper.insperclicker.repository.PlayerRepository;
+import br.edu.insper.insperclicker.repository.models.PlayerModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,24 +13,25 @@ public class PlayerState
     @Autowired
     private PlayerRepository repository;
 
-    public Player getPlayerInstance(String name)
+    public PlayerModel getPlayerInstance(String name)
     {
-        Player player = repository.findByName(name);
-        if(player == null)
+        PlayerModel playerModel = repository.findByName(name);
+        if(playerModel == null)
         {
-            player = repository.save(new Player(name));
+            System.out.println("null");
+            playerModel = repository.save(PlayerModel.from(new Player(name)));
         }
-        return player;
+        return playerModel;
     }
 
-    public Player saveState(Player player)
+    public PlayerModel saveState(PlayerModel player)
     {
         return repository.save(player);
     }
 
     public Game getGameInstance(String player)
     {
-        return getPlayerInstance(player).getGame();
+        return PlayerModel.to(getPlayerInstance(player)).getGame();
     }
 
 }

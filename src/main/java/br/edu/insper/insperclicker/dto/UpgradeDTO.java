@@ -27,7 +27,7 @@ public record UpgradeDTO(
                 upgrade.getPrice(),
                 upgrade.isTaken(),
                 upgrade.isUnlocked(),
-                upgrade.getTargetList()
+                upgrade.getTargetListAsDTO()
         );
     }
 
