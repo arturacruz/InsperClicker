@@ -1,8 +1,7 @@
 package br.edu.insper.insperclicker.dto;
 
+import br.edu.insper.insperclicker.game.currency.common.Currency;
 import br.edu.insper.insperclicker.game.resources.achievement.common.Achievement;
-import br.edu.insper.insperclicker.game.resources.building.Building;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,8 +11,11 @@ public record AchievementDTO(
         String displayName,
         String description,
         String requirementType,
+        double requirement,
+        Currency target,
         boolean unlocked)
 {
+
     public static AchievementDTO from(Achievement achievement)
     {
         return new AchievementDTO(
@@ -21,6 +23,8 @@ public record AchievementDTO(
                 achievement.getDisplayName(),
                 achievement.getDescription(),
                 achievement.getRequirementType(),
+                achievement.getRequirement(),
+                achievement.getTarget(),
                 achievement.isUnlocked()
         );
     }

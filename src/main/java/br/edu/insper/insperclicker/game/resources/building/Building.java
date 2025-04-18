@@ -15,6 +15,24 @@ public class Building extends LeveledGameResource
     private double productionBonus = 0;
     private double upgradeProductionBonus = 0;
 
+    public Building(String name,
+                    String displayName,
+                    double baseCost,
+                    String description,
+                    double baseMoneyPerSec,
+                    double clickSizeIncrease,
+                    int unlockLevel,
+                    int level)
+    {
+        super(name, displayName, description, level);
+        this.baseCost = baseCost;
+        this.baseMoneyPerSec = baseMoneyPerSec;
+        this.unlockLevel = unlockLevel;
+        this.clickSizeIncrease = clickSizeIncrease;
+
+        updatePrice();
+    }
+
     public Building(String name, String displayName, double baseCost, String description, double baseMoneyPerSec, double clickSizeIncrease, int unlockLevel)
     {
         super(name, displayName, description, 0);
@@ -149,5 +167,9 @@ public class Building extends LeveledGameResource
     public double getEffectiveClickSizeIncrease()
     {
         return clickSizeIncrease * getEffectiveProductionBonus();
+    }
+
+    public double getBaseCost() {
+        return baseCost;
     }
 }

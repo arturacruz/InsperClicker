@@ -14,6 +14,7 @@ import br.edu.insper.insperclicker.game.currency.stock.Stock;
 import br.edu.insper.insperclicker.game.currency.money.Money;
 import br.edu.insper.insperclicker.game.resources.upgrade.Upgrade;
 import br.edu.insper.insperclicker.game.resources.upgrade.UpgradeRegistry;
+import org.springframework.data.annotation.Transient;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -21,20 +22,57 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public class Graduation
 {
-    private final Registries registries = new Registries();
-    private final Money money = registries.initializeMoney();
-    private final MoneyPerSec moneyPerSec = registries.initializeMoneyPerSec();
-    private final Stock stock = registries.initializeStock();
-    private double clickSize = 1;
-    private int currentUnlockLevel = 1;
-    private double buildingDiscountBonus = 0;
-    private double buildingProductionBonus = 0;
-    private final HashMap<String, Building> buildings = registries.initializeBuildings();
-    private final HashMap<String, Upgrade> upgrades = registries.initializeUpgrades();
-    private final HashMap<String, Achievement> achievements = registries.initializeAchievements();
+    private final Money money;
+    private final MoneyPerSec moneyPerSec;
+    private final Stock stock;
+    private double clickSize;
+    private int currentUnlockLevel;
+    private double buildingDiscountBonus;
+    private double buildingProductionBonus;
+    private final HashMap<String, Building> buildings;
+    private final HashMap<String, Upgrade> upgrades;
+    private final HashMap<String, Achievement> achievements;
+
+    public Graduation(
+            Money money,
+            MoneyPerSec moneyPerSec,
+            Stock stock,
+            HashMap<String, Building> buildings,
+            HashMap<String, Upgrade> upgrades,
+            HashMap<String, Achievement> achievements,
+            double clickSize,
+            int currentUnlockLevel,
+            double buildingDiscountBonus,
+            double buildingProductionBonus)
+    {
+        this.money = money;
+        this.moneyPerSec = moneyPerSec;
+        this.stock = stock;
+        this.buildings = buildings;
+        this.upgrades = upgrades;
+        this.achievements = achievements;
+        this.clickSize = clickSize;
+        this.currentUnlockLevel = currentUnlockLevel;
+        this.buildingDiscountBonus = buildingDiscountBonus;
+        this.buildingProductionBonus = buildingProductionBonus;
+    }
+
+    public Graduation()
+    {
+        Registries registries = new Registries();
+        money = registries.initializeMoney();
+        moneyPerSec = registries.initializeMoneyPerSec();
+        stock = registries.initializeStock();
+        buildings = registries.initializeBuildings();
+        upgrades = registries.initializeUpgrades();
+        achievements = registries.initializeAchievements();
+        clickSize = 1;
+        currentUnlockLevel = 1;
+        buildingDiscountBonus = 0;
+        buildingProductionBonus = 0;
+    }
 
     public void click(int clickAmount)
     {
@@ -61,7 +99,7 @@ public class Graduation
         return clickSize;
     }
 
-    public int getStock()
+    public double getStock()
     {
         return stock.getAmount();
     }
@@ -270,6 +308,11 @@ public class Graduation
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
+    public HashMap<String, Building> getUnfilteredBuildings()
+    {
+        return buildings;
+    }
+
     public void updateRunSoulValues(Player player)
     {
         buildingDiscountBonus = player.getBuildingDiscountBonus();
@@ -292,6 +335,11 @@ public class Graduation
                 .stream()
                 .filter(entry -> entry.getValue().isUnlocked())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    public HashMap<String, Upgrade> getUnfilteredUpgrades()
+    {
+        return upgrades;
     }
 
     public void unlockUpgrades()
