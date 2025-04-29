@@ -1,5 +1,8 @@
 package br.edu.insper.insperclicker.game.resources.building;
 
+import org.springframework.data.annotation.PersistenceConstructor;
+import org.springframework.data.annotation.PersistenceCreator;
+
 import br.edu.insper.insperclicker.game.common.Graduation;
 import br.edu.insper.insperclicker.game.resources.common.LeveledGameResource;
 
@@ -15,6 +18,7 @@ public class Building extends LeveledGameResource
     private double productionBonus = 0;
     private double upgradeProductionBonus = 0;
 
+    @PersistenceCreator
     public Building(String name,
                     String displayName,
                     double baseCost,
