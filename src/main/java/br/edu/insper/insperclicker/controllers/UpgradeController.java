@@ -24,9 +24,10 @@ public class UpgradeController
     @GetMapping("/buy/{upgradeName}")
     public PlayerDTO buyUpgrade(
             @RequestParam String playerName,
+            @RequestParam String password,
             @PathVariable String upgradeName)
     {
-        PlayerModel playerModel = playerState.getPlayerInstance(playerName);
+        PlayerModel playerModel = playerState.getPlayerInstance(playerName, password);
         Player player = PlayerModel.to(playerModel);
         Game game = player.getGame();
 

@@ -23,10 +23,11 @@ public class BuildingController
     @GetMapping("/buy/{buildingName}/{amount}")
     public PlayerDTO buyBuilding(
             @RequestParam String playerName,
+            @RequestParam String password,
             @PathVariable String buildingName,
             @PathVariable int amount)
     {
-        PlayerModel playerModel = playerState.getPlayerInstance(playerName);
+        PlayerModel playerModel = playerState.getPlayerInstance(playerName, password);
         Player player = PlayerModel.to(playerModel);
         Game game = player.getGame();
 

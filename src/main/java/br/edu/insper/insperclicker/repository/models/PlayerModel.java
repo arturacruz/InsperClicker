@@ -5,6 +5,7 @@ import br.edu.insper.insperclicker.game.common.Player;
 public record PlayerModel(
         String id,
         String name,
+        String password,
         double bitcoins,
         double buildingProductionBonus,
         double buildingDiscountBonus,
@@ -16,6 +17,7 @@ public record PlayerModel(
         return new PlayerModel(
                 player.getId(),
                 player.getName(),
+                player.getPassword(),
                 player.getBitcoins(),
                 player.getBuildingProductionBonus(),
                 player.getBuildingDiscountBonus(),
@@ -28,6 +30,7 @@ public record PlayerModel(
         return new Player(
                 playerModel.id,
                 playerModel.name,
+                playerModel.password,
                 playerModel.bitcoins,
                 playerModel.buildingProductionBonus,
                 playerModel.buildingDiscountBonus,

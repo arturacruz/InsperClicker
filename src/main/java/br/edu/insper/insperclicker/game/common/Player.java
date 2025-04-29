@@ -12,7 +12,8 @@ public class Player
     private String id;
 
     @Indexed(unique = true)
-    private String name;
+    private final String name;
+    private final String password;
 
     private double bitcoins;
     private double buildingProductionBonus;
@@ -20,18 +21,20 @@ public class Player
 
     private final Game game;
 
-    public Player(String id, String name, double bitcoins, double buildingProductionBonus, double buildingDiscountBonus, Game game)
+    public Player(String id, String name, String password, double bitcoins, double buildingProductionBonus, double buildingDiscountBonus, Game game)
     {
         this.id = id;
         this.name = name;
+        this.password = password;
         this.bitcoins = bitcoins;
         this.buildingProductionBonus = buildingProductionBonus;
         this.buildingDiscountBonus = buildingDiscountBonus;
         this.game = game;
     }
 
-    public Player(String name)
+    public Player(String name, String password)
     {
+        this.password = password;
         this.name = name;
         this.game = new Game();
         this.bitcoins = 0;
@@ -42,11 +45,6 @@ public class Player
     public String getName()
     {
         return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 
     public String getId()
@@ -93,4 +91,8 @@ public class Player
         return game;
     }
 
+    public String getPassword()
+    {
+        return password;
+    }
 }

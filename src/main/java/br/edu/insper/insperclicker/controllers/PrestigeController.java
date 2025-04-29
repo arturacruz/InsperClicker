@@ -14,9 +14,12 @@ public class PrestigeController
     private PlayerState playerState;
 
     @GetMapping("/show")
-    public PrestigeDTO showPrestigeEarnings(@RequestParam String playerName)
+    public PrestigeDTO showPrestigeEarnings(
+            @RequestParam String playerName,
+            @RequestParam String password
+            )
     {
-        Game game = playerState.getGameInstance(playerName);
+        Game game = playerState.getGameInstance(playerName, password);
         game.doPassiveActions();
         return new PrestigeDTO(
                 Prestige.getBitcoinEarnedOnPrestige(game.getGraduation().getMoney())

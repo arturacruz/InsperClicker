@@ -19,13 +19,14 @@ public class ClickController
     @GetMapping("/{clickAmount}")
     public PlayerDTO click(
             @RequestParam String playerName,
+            @RequestParam String password,
             @PathVariable int clickAmount)
     {
         if(clickAmount > 1000)
         {
             throw new InvalidClickInputException(clickAmount);
         }
-        PlayerModel playerModel = playerState.getPlayerInstance(playerName);
+        PlayerModel playerModel = playerState.getPlayerInstance(playerName, password);
         Player player = PlayerModel.to(playerModel);
         Game game = player.getGame();
 

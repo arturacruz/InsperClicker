@@ -20,7 +20,8 @@ public class GameResourceExceptionHandler
     @ExceptionHandler({GameResourceAlreadyOwnedException.class,
                         GameResourceNotUnlockedException.class,
                         InsufficientFundsException.class,
-                        InvalidClickInputException.class})
+                        InvalidClickInputException.class,
+                        IncorrectPasswordException.class})
     protected ResponseEntity<ErrorDTO> badRequest(RuntimeException err)
     {
         return ErrorUtils.throwBadRequest(err);

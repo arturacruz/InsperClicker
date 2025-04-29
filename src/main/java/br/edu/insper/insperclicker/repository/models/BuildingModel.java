@@ -14,7 +14,8 @@ public record BuildingModel(
         double baseMoneyPerSec,
         double clickSizeIncrease,
         int unlockLevel,
-        int level) {
+        int level)
+{
     public static BuildingModel from(Building building) {
         return new BuildingModel(
                 building.getName(),
