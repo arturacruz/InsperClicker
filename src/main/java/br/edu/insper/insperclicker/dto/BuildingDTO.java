@@ -11,6 +11,7 @@ public record BuildingDTO(
         String displayName,
         String description,
         int level,
+        int unlockLevel,
         double price,
         double moneyPerSec
 )
@@ -22,6 +23,7 @@ public record BuildingDTO(
                 building.getDisplayName(),
                 building.getDescription(),
                 building.getLevel(),
+                building.getUnlockLevel(),
                 building.getPrice(),
                 building.getMoneyPerSec()
         );
