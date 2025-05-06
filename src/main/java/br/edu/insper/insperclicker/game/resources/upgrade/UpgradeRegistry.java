@@ -43,7 +43,10 @@ public class UpgradeRegistry
 
     public HashMap<String, Upgrade> generateStarterUpgrades()
     {
-        addToMap(TEST_UPGRADE);
+        addToMap(REAL_MUG);
+        addToMap(EURO_MUG);
+        addToMap(COIN_GRINDER);
+        addToMap(GOLD_GRINDER);
         return upgrades;
     }
 
