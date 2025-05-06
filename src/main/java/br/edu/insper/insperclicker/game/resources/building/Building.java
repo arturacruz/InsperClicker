@@ -35,6 +35,7 @@ public class Building extends LeveledGameResource
         this.clickSizeIncrease = clickSizeIncrease;
 
         updatePrice();
+        updateMoneyPerSec();
     }
 
     public Building(String name, String displayName, double baseCost, String description, double baseMoneyPerSec, double clickSizeIncrease, int unlockLevel)
@@ -46,6 +47,7 @@ public class Building extends LeveledGameResource
         this.clickSizeIncrease = clickSizeIncrease;
 
         updatePrice();
+        updateMoneyPerSec();
     }
 
 

@@ -84,7 +84,6 @@ public class Graduation
         LocalDateTime currentRequest = LocalDateTime.now();
         double milliseconds = ChronoUnit.MILLIS.between(lastRequest, currentRequest);
         money.addToMoney(getMoneyPerSec() * (milliseconds / 1000));
-        System.out.println("do money");
     }
 
     public double getMoney()
