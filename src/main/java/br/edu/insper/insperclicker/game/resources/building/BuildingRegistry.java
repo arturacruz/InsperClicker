@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class BuildingRegistry
 {
     private final HashMap<String, Building> buildings = new HashMap<>();
-    public final Building COFFEE_MUG = new Building(
+    public final Building MONEY_MUG = new Building(
             "moneyMug",
             "Money Mug",
             15,
@@ -14,7 +14,7 @@ public class BuildingRegistry
             0,
             0);
 
-    public final Building COFFEE_GRINDER = new Building(
+    public final Building MONEY_GRINDER = new Building(
             "moneyGrinder",
             "Money Grinder",
             100,
@@ -23,7 +23,7 @@ public class BuildingRegistry
             0,
             1);
 
-    public final Building COFFEE_MAKER = new Building(
+    public final Building MONEY_MAKER = new Building(
             "moneyMaker",
             "Money Maker",
             1000,
@@ -34,9 +34,9 @@ public class BuildingRegistry
 
     public HashMap<String, Building> generateStarterBuildings()
     {
-        addToMap(COFFEE_MUG);
-        addToMap(COFFEE_GRINDER);
-        addToMap(COFFEE_MAKER);
+        addToMap(MONEY_MUG);
+        addToMap(MONEY_GRINDER);
+        addToMap(MONEY_MAKER);
         return buildings;
     }
 

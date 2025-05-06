@@ -16,13 +16,30 @@ public class UpgradeRegistry
     {
         this.buildingRegistry = buildingRegistry;
 
-        TEST_UPGRADE = new Upgrade(
-                "testUpgrade", "Test Upgrade", "A test upgrade.", 10,
-                createTarget(buildingRegistry.COFFEE_MUG, 2, 0.5)
+        REAL_MUG = new Upgrade(
+                "realMug", "Real Mug", "A devalued mug.", 10,
+                createTarget(buildingRegistry.MONEY_MUG, 2, 0.25)
+        );
+        EURO_MUG = new Upgrade(
+                "euroMug", "Euro Mug", "A socialist mug.", 100,
+                createTarget(buildingRegistry.MONEY_MUG, 10, 0.5)
+        );
+
+        COIN_GRINDER = new Upgrade(
+                "coinGrinder", "Coin Grinder", "Counting pennies.", 20,
+                createTarget(buildingRegistry.MONEY_GRINDER, 2, 0.25)
+        );
+        GOLD_GRINDER = new Upgrade(
+                "goldGrinder", "Gold Grinder", "A 'stable' economy.", 120,
+                createTarget(buildingRegistry.MONEY_GRINDER, 10, 0.5)
         );
     }
 
-    public final Upgrade TEST_UPGRADE;
+    public final Upgrade REAL_MUG;
+    public final Upgrade EURO_MUG;
+
+    public final Upgrade COIN_GRINDER;
+    public final Upgrade GOLD_GRINDER;
 
     public HashMap<String, Upgrade> generateStarterUpgrades()
     {
